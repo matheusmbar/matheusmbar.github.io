@@ -22,6 +22,8 @@
   &lt;li&gt;(add here your own frustrations, there are many more on the road)&lt;/li&gt;
 &lt;/ul&gt;
 
+&lt;!--more--&gt;
+
 &lt;p&gt;After getting in contact with some high level programming workflows, with its unitary and integration tests, automated continuous integration and continuous deployment tools, I’ve started to look for a way to improve my own embeded development workflow.&lt;/p&gt;
 
 &lt;p&gt;At some point the book &lt;strong&gt;Test-Driven Development for Embedded C&lt;/strong&gt; &lt;em&gt;by James W. Grenning&lt;/em&gt; showed up on my searches and caught my attention. At some online store, it has this catchy description:&lt;/p&gt;
@@ -45,23 +47,8 @@
 
 &lt;p&gt;The next article will be focused on what is TDD and how it can be applied to embedded systems.&lt;/p&gt;
 
-&lt;p&gt;Disclaimer: I’m in no way related to James W. Grenning or its publisher and this project is developed in my free will, other books (at least one more) will be recomended along the way. That being said, I strongly recommend obtaining a copy of &lt;strong&gt;Test-Driven Development for Embedded C&lt;/strong&gt; and starting to study it to understand better the concepts used along this project.&lt;/p&gt;
-
-&lt;div id=&quot;disqus_thread&quot;&gt;&lt;/div&gt;
-&lt;script type=&quot;text/javascript&quot;&gt;
-    /* * * CONFIGURATION VARIABLES * * */
-    var disqus_shortname = 'matheusmbar';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-&lt;/script&gt;
-
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href=&quot;https://disqus.com/?ref_noscript&quot; rel=&quot;nofollow&quot;&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-
+&lt;h3 id=&quot;disclaimer&quot;&gt;Disclaimer:&lt;/h3&gt;
+&lt;p&gt;I’m in no way related to James W. Grenning or its publisher and this project is developed in my free will, other books (at least one more) will be recomended along the way. That being said, I strongly recommend obtaining a copy of &lt;strong&gt;Test-Driven Development for Embedded C&lt;/strong&gt; and starting to study it to understand better the concepts used along this project.&lt;/p&gt;
 </description>
 				<pubDate>Tue, 19 Feb 2019 00:00:00 -0300</pubDate>
 				<link>/general/2019/02/19/home.html</link>

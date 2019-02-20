@@ -1,11 +1,12 @@
 # visit https://github.com/mojombo/jekyll/wiki/Configuration for more settings
+# docs https://jekyllrb.com/docs/
 
 paginate: 10 # pagination based on number of posts
 paginate_path: "page:num"
 exclude: ["README.md"] # files to exclude
 highlighter: rouge
 markdown: kramdown
-disqus: matheusmbar
+disqus: matheusmbar-github-io
 google_analytics: UA-134810563-1
 title: bugfree-robot
 
@@ -27,6 +28,7 @@ author:
 #  bio: 
   email_md5: 8db7b9f2f6186cfad394d87fe6868a83
 
+excerpt_separator: <!--more-->
 #rss_path: feed.xml
 categories_path: categories.html
 tags_path: tags.html
