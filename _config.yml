@@ -8,18 +8,18 @@ highlighter: rouge
 markdown: kramdown
 disqus: matheusmbar-github-io
 google_analytics: UA-134810563-1
-title: bugfree-robot
+title: Matheus Marques
 
 defaults:
   -
     scope:
       path: "" # empty string for all files
     values:
-      title: bugfree-robot
+      title: Matheus Marques
 
 description: A journey about developing embedded systems
 author:
-  name: matheusmbar
+  name: Matheus Marques
 #  email: 
   github: matheusmbar
 #  twitter: 
@@ -27,6 +27,7 @@ author:
   linkedin: matheusmbar
 #  bio: 
   email_md5: 8db7b9f2f6186cfad394d87fe6868a83
+  bio: I'm an Electronic Engineer always trying to learn more about developing embedded systems
 
 excerpt_separator: <!--more-->
 #rss_path: feed.xml
