@@ -1,1 +1,40 @@
-theme: jekyll-theme-slate
+# visit https://github.com/mojombo/jekyll/wiki/Configuration for more settings
+
+paginate: 10 # pagination based on number of posts
+paginate_path: "page:num"
+exclude: ["README.md"] # files to exclude
+highlighter: rouge
+markdown: kramdown
+disqus: matheusmbar
+google_analytics: UA-134810563-1
+title: bugfree-robot
+
+defaults:
+  -
+    scope:
+      path: "" # empty string for all files
+    values:
+      title: bugfree-robot
+
+description: A journey about developing embedded systems
+author:
+  name: matheusmbar
+#  email: 
+  github: matheusmbar
+#  twitter: 
+#  pinterest: 
+  linkedin: matheusmbar
+#  bio: 
+  email_md5: 8db7b9f2f6186cfad394d87fe6868a83
+
+#rss_path: feed.xml
+categories_path: categories.html
+tags_path: tags.html
+
+# set it as url of an image
+# sidebar_background_image: https://www.dropbox.com/s/g9h23zrycedxtk5/sky.png?raw=1
+
+BASE_PATH:
+
+plugins:
+  - jekyll-paginate
