@@ -10,6 +10,7 @@ disqus: matheusmbar-github-io
 google_analytics: UA-134810563-1
 title: Matheus Marques
 
+
 defaults:
   -
     scope:
@@ -27,7 +28,7 @@ author:
   linkedin: matheusmbar
 #  bio: 
   email_md5: 8db7b9f2f6186cfad394d87fe6868a83
-  bio: I'm an Electronic Engineer always trying to learn more about developing embedded systems
+  bio: I'm an Electronic Engineer always trying to learn more about developing embedded systems and help other people to do so
 
 excerpt_separator: <!--more-->
 #rss_path: feed.xml

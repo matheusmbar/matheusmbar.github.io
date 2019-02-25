@@ -1,11 +1,12 @@
 ---
 layout: post
-title: Welcome
-categories: [general]
-tags: [TDD]
+title: bugfree-robot project start
+categories: [bugfree-robot]
+tags: [TDD, embedded, programming]
 comments: true
+footnote: This is just the beginning
 ---
-This project is being developed as a way to create some kind of tutorial, guidance or general tips/tricks about coding for embedded systems using Test Driven Development (TDD) and some other techniques. 
+This post is the start of a new personal/educational project that motivated me to start this blog. It's will be developed as kind of tutorial, guidance and general tips/tricks about coding for embedded systems using Test Driven Development (TDD) and some other techniques. 
 
 I've being coding microcontrolers for several years and it can be really challenging due to many reasons like:
 - define what is is supposed to execute
@@ -37,6 +38,11 @@ This article got a bit bigger than expected but it can't end without a properly 
 I'm going to develop the firmware from scratch for a robotics project of mine. This wiki will be used as a progress blog, sometimes describing technical stuff about how to put the test environment to work, create unitary and integration tests, make-build-test-repeat, design system's architecture and other times talking about the robot itself, its taks and the algorithms implemented for it. 
 
 The idea is giving a strong base for those who want to improve as embedded programmers through passing on some practices that are helping me improve in the last (and following) months too. 
+
+
+The robot's source code will be maintained completely open source in the repository [bugfree-robot](https://github.com/matheusmbar/bugfree_robot). I pretend to post as much as possible about the project development here and always link the GItHub source files and commits that reflects the project status. 
+
+Feel free to comment on the posts with questions, suggestions, compliments, etc.  
 
 The next article will be focused on what is TDD and how it can be applied to embedded systems. 
 
