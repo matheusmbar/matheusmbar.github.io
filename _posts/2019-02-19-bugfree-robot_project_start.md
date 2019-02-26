@@ -11,7 +11,7 @@ This post is the start of a new personal/educational project that motivated me t
 I've being coding microcontrolers for several years and it can be really challenging due to many reasons like:
 - define what it is supposed to execute
 - model the system's architecture so it is able to run all its tasks
-- make sure it wont't fail while running... 
+- make sure it won't fail while running... 
 - it WILL fail sometime, so make sure that is is able to recover from failures (_gracefully_ as they use to say)
 - check if all the functions are behaving correctly running by themselves and inside the full firmware
 - understand and control correctly the microcontroller peripherals and the other components on the hardware
@@ -20,7 +20,7 @@ I've being coding microcontrolers for several years and it can be really challen
 
 <!--more-->
 
-After getting in contact with some high level programming workflows, with its unitary and integration tests, automated continuous integration and continuous deployment tools, I've started to look for a way to improve my own embeded development workflow. 
+After getting in contact with some high level programming workflows, with its unitary and integration tests, automated continuous integration and continuous deployment tools, I've started to look for a way to improve my own embedded development workflow. 
 
 At some point the book **Test-Driven Development for Embedded C** _by James W. Grenning_ showed up on my searches and caught my attention. At some online store, it has this catchy description:
 
@@ -30,12 +30,12 @@ Totally captivating right? So I've decided to give it a try and don't regret it 
 
 My journey started with reading it from start to finish (_there are some exercises recommended to be executed on each chapter but I've just jumped them, think about executing them if this method works best for your learning cycle_) and creating a small sample project to test it out. It IS NOT this project. The first one was really confusing and clogged with useless functions that had the learning process as the only reason to exist, functions that checked if an IO pin was already initialized, others that read the ping and saved its logic level in a data structure on RAM for no one to consult, so many overhead on everything. This first project is laying forgotten in some private repository never to be recovered. 
 
-At this time a new project was starting at my job and I've decided to execute at least part of it applying TDD. Its core was about communicating through UART with an external radio module with AT commands and compressing data in the payload. The development of the data insertion on the payload being verified by the tests made me alot more confident that everything was running as expected at the end, and helped me identify many mistakes in codes that I was sure that were built carefully and that would work correctly. And the surprising part: most of it were coded and verified without even openning the microcontrollers development IDE, firing its compiler neither opening some debugging session with its programmer. Crazy right? But it is possible, while saving a lot of time and headache. 
+At this time a new project was starting at my job and I've decided to execute at least part of it applying TDD. Its core was about communicating through UART with an external radio module with AT commands and compressing data in the payload. The development of the data insertion on the payload being verified by the tests made me a lot more confident that everything was running as expected at the end, and helped me identify many mistakes in codes that I was sure that were built carefully and that would work correctly. And the surprising part: most of it were coded and verified without even opening the microcontrollers development IDE, firing its compiler neither opening some debugging session with its programmer. Crazy right? But it is possible, while saving a lot of time and headache. 
 
 ### What is this project about
 This article got a bit bigger than expected but it can't end without a properly introduction to what this project is supposed to be. 
 
-I'm going to develop the firmware from scratch for a robotics project of mine. This wiki will be used as a progress blog, sometimes describing technical stuff about how to put the test environment to work, create unitary and integration tests, make-build-test-repeat, design system's architecture and other times talking about the robot itself, its taks and the algorithms implemented for it. 
+I'm going to develop the firmware from scratch for a robotics project of mine. This website will be used as a progress blog, sometimes describing technical stuff about how to put the test environment to work, create unitary and integration tests, code-make-test-repeat, design system's architecture and other times talking about the robot itself, its tasks and the algorithms implemented for it. 
 
 The idea is giving a strong base for those who want to improve as embedded programmers through passing on some practices that are helping me improve in the last (and following) months too. 
 
@@ -47,4 +47,4 @@ Feel free to comment on the posts with questions, suggestions, compliments, etc.
 The next article will be focused on what is TDD and how it can be applied to embedded systems. 
 
 ### Disclaimer: 
-I'm in no way related to James W. Grenning or its publisher and this project is developed in my free will, other books (at least one more) will be recomended along the way. That being said, I strongly recommend obtaining a copy of **Test-Driven Development for Embedded C** and starting to study it to understand better the concepts used along this project. 
+I'm in no way related to James W. Grenning or its publisher and this project is developed in my free will, other books (at least one more) will be recommended along the way. That being said, I strongly recommend obtaining a copy of **Test-Driven Development for Embedded C** and starting to study it to understand better the concepts used along this project. 

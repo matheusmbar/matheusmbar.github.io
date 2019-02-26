@@ -11,7 +11,7 @@ Making sure that the source code functions are running and executing everything 
 
 Test Driven Development (TDD) is a tecnique intended to make sure that the source code is correctly coded and tested in most of the possible use cases for it. The programmer will write the test code that calls the functions and check their behavior and return values with different input parameters. The objective is to add as many tests as required to let no unmapped scenario to fail. 
 
-The development process can be sumarized in:
+The development process can be summarized in:
 1. Understand a new code requirement
 1. Code the a new test
 1. Make it compile
@@ -24,15 +24,15 @@ The development process can be sumarized in:
 
 <!--more-->
 
-In order to develop the tests, it is required to use some kind of framework that is goin to provide the test tools. Nothing more than a really big chunk of source code, libraries and tools that will get compiled with the tests and the project's source code, returning the result of every check executed. 
+In order to develop the tests, it is required to use some kind of framework that is going to provide the test tools. Nothing more than a really big chunk of source code, libraries and tools that will get compiled with the tests and the project's source code, returning the result of every check executed. 
 
-[Cpputest](https://cpputest.github.io/) is my personal choice for that. It is open source, free to use and widely accepted in the C/C++ development comunity. There is a large set of tools to execute many kind of checks and a mock library is included too (more about _mock library_ in a latter post). It is coded in C++ but is able to work with C and C++ code, so no need to get afraid due to its sugestive CPP name. 
+[Cpputest](https://cpputest.github.io/) is my personal choice for that. It is open source, free to use and widely accepted in the C/C++ development community. There is a large set of tools to execute many kind of checks and a mock library is included too (more about _mock library_ in a latter post). It is coded in C++ but is able to work with C and C++ code, so no need to get afraid due to its sugestive CPP name. 
 
 [Google Test](https://github.com/google/googletest) is a great and open source tool that is coded in C++ and includes a mock tool (Google Mock), but it works ONLY to test C++ source code. This is a major drawback since most of the manufacturer libraries provided for embedded development is coded in C without C++ support and C++ compilers for embedded are not so common neither some efficient some times. C++ is a great tool but I still don't see it with many advantages over C for not advanced embedded programming. 
 
-[CUnit](http://cunit.sourceforge.net/) is another famous tool, coded completly in C and works just for C. The fact that it is coded in C requires some additional steps to inform the test code about every new test added, what increases the chance of mistakes as keeping tests out of execution without realizing it. Its development seems to be stagnant for a few years now.
+[CUnit](http://cunit.sourceforge.net/) is another famous tool, coded completely in C and works just for C. The fact that it is coded in C requires some additional steps to inform the test code about every new test added, what increases the chance of mistakes as keeping tests out of execution without realizing it. Its development seems to be stagnant for a few years now.
 
-All the code around here will be built with Cpputest, but the TDD development cycle is really similar in any framework. The requirement is about learning how to set the environment to compile correctly, identify the test groups, test cases and the function calls. Almost any programming language has some test frameworks, so make sure to look for it even when codyng for Python, Ruby, JavaScript, etc out of the embedded world.
+All the code around here will be built with Cpputest, but the TDD development cycle is really similar in any framework. The requirement is about learning how to set the environment to compile correctly, identify the test groups, test cases and the function calls. Almost any programming language has some test frameworks, so make sure to look for it even when coding for Python, Ruby, JavaScript, etc out of the embedded world.
 
 ---
 
@@ -148,7 +148,7 @@ uint8_t multiply (int8_t a, int8_t b){
 }
 ``` 
 
-The best part is that this test is already passing righ now and two tests will be added:
+The best part is that this test is already passing right now and two tests will be added:
 
 ```C
 TEST(multiply_funtion, opposite_signs){
@@ -214,6 +214,6 @@ OK (4 tests, 4 ran, 9 checks, 0 ignored, 0 filtered out, 0 ms)
 ----
 
 
-I've commited the project to GitHub with this source code and the Cpputest framework. No need to hurry on checking that since the next post will be about creating the project folders structure and other environment configs to build it. Click on the next link to find it in the correct commit: [bugfree-robot/added cpputest and multiply library](https://github.com/matheusmbar/bugfree_robot/tree/4668eaa0f6f00a41255018d063f3fa21f7d495db)
+I've committed the project to GitHub with this source code and the Cpputest framework. No need to hurry on checking that since the next post will be about creating the project folders structure and other environment configs to build it. Click on the next link to find it in the correct commit: [bugfree-robot/added cpputest and multiply library](https://github.com/matheusmbar/bugfree_robot/tree/4668eaa0f6f00a41255018d063f3fa21f7d495db)
 
-Those who do open the repository will see that some details in the source code were ommited here and I'm going to talk about them later too. 
+Those who do open the repository will see that some details in the source code were omitted here and I'm going to talk about them later too. 
