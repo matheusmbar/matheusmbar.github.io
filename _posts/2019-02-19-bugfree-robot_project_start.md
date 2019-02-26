@@ -26,7 +26,7 @@ At some point the book **Test-Driven Development for Embedded C** _by James W. G
 
 > Still chasing bugs and watching your code deteriorate? Think TDD is only for desktop or web apps? It’s not: TDD is for you, the embedded C programmer. TDD helps you prevent defects and build software with a long useful life. This is the first book to teach the hows and whys of TDD for C programmers.
 
-Totally captivating right? So I've decided to git it a try and don't regreat it for a moment. 
+Totally captivating right? So I've decided to give it a try and don't regret it for a moment. 
 
 My journey started with reading it from start to finish (_there are some exercises recommended to be executed on each chapter but I've just jumped them, think about executing them if this method works best for your learning cycle_) and creating a small sample project to test it out. It IS NOT this project. The first one was really confusing and clogged with useless functions that had the learning process as the only reason to exist, functions that checked if an IO pin was already initialized, others that read the ping and saved its logic level in a data structure on RAM for no one to consult, so many overhead on everything. This first project is laying forgotten in some private repository never to be recovered. 
 
