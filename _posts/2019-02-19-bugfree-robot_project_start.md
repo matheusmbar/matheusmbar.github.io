@@ -13,7 +13,7 @@ I've being coding microcontrolers for several years and it can be really challen
 - model the system's architecture so it is able to run all its tasks
 - make sure it wont't fail while running... 
 - it WILL fail sometime, so make sure that is is able to recover from failures (_gracefully_ as they use to say)
-- check if all the functions are behvaing as correctly by themselves and inside the full firmware
+- check if all the functions are behaving correctly running by themselves and inside the full firmware
 - understand and control correctly the microcontroller peripherals and the other components on the hardware
 - be able to add features and change behaviors in the system and many times they will require big changes in the way other parts or it are planned and coded
 - (add here your own frustrations, there are many more on the road)
