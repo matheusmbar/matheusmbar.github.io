@@ -9,7 +9,7 @@ footnote: This is just the beginning
 This post is the start of a new personal/educational project that motivated me to start this blog. It's will be developed as kind of tutorial, guidance and general tips/tricks about coding for embedded systems using Test Driven Development (TDD) and some other techniques. 
 
 I've being coding microcontrolers for several years and it can be really challenging due to many reasons like:
-- define what is is supposed to execute
+- define what it is supposed to execute
 - model the system's architecture so it is able to run all its tasks
 - make sure it wont't fail while running... 
 - it WILL fail sometime, so make sure that is is able to recover from failures (_gracefully_ as they use to say)
