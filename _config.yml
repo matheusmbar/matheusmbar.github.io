@@ -42,3 +42,4 @@ BASE_PATH:
 
 plugins:
   - jekyll-paginate
+  - jemoji

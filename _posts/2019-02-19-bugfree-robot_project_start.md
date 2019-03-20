@@ -6,6 +6,8 @@ tags: [TDD, embedded, programming]
 comments: true
 footnote: This is just the beginning
 ---
+
+
 This post is the start of a new personal/educational project that motivated me to start this blog. It will be developed as kind of tutorial, guidance and general tips/tricks about coding for embedded systems using Test Driven Development (TDD) and some other techniques. 
 
 I've being coding microcontrolers for several years and it can be really challenging due to many reasons like:
