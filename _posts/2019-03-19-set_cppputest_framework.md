@@ -162,4 +162,4 @@ Finding those indicates that Cpputest is ready to build and execute the tests. T
 
 ----
 
-There is no commit that reflects this exact point of the development cycle since I've forgot to commit it while writing the last post :unamused:. You can check [this commit](https://github.com/matheusmbar/bugfree_robot/commit/b3b89a6c27d8607911186ba315695d4ed045edce) to access it with a few steps ahead while I try some `git black magic` to travel back on time and alter this time line.
+There is no commit that reflects this exact point of the development cycle since I've forgot to commit it while writing the last post :unamused:. You can check [this commit](https://github.com/matheusmbar/bugfree_robot/tree/b3b89a6c27d8607911186ba315695d4ed045edce) to access it with a few steps ahead while I try some `git black magic` to travel back on time and alter this time line.

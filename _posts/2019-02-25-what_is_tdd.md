@@ -214,6 +214,6 @@ OK (4 tests, 4 ran, 9 checks, 0 ignored, 0 filtered out, 0 ms)
 ----
 
 
-I've committed the project to GitHub with this source code and the Cpputest framework. No need to hurry on checking that since the next post will be about creating the project folders structure and other environment configs to build it. Click on the next link to find it in the correct commit: [bugfree-robot/added cpputest and multiply library](https://github.com/matheusmbar/bugfree_robot/commit/b3b89a6c27d8607911186ba315695d4ed045edce)
+I've committed the project to GitHub with this source code and the Cpputest framework. No need to hurry on checking that since the next post will be about creating the project folders structure and other environment configs to build it. Click on the next link to find it in the correct commit: [bugfree-robot/added cpputest and multiply library](https://github.com/matheusmbar/bugfree_robot/tree/b3b89a6c27d8607911186ba315695d4ed045edce)
 
 Those who do open the repository will see that some details in the source code were omitted here and I'm going to talk about them later too. 
