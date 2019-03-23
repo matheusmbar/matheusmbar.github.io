@@ -31,7 +31,7 @@ author:
   bio: I'm an Electronic Engineer always trying to learn more about developing embedded systems and help other people to do so
 
 excerpt_separator: <!--more-->
-#rss_path: feed.xml
+rss_path: feed.xml
 categories_path: categories.html
 tags_path: tags.html
 
