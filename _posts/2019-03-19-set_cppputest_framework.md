@@ -4,7 +4,7 @@ title: setup Cpputest framework
 categories: [bugfree-robot]
 tags: [TDD, programming, git, bash]
 comments: true
-footnote: Clone and build it !
+footnote: Submodules give you repository super powers!
 ---
 
 The [last post]({{ site.baseurl }}{% post_url 2019-02-25-what_is_tdd %}) showed an example of coding and running tests with Cpputest, without revealing the ugly part of putting it to work. It is now time to reveal those secrets by explaining how to set a project with Cpputest, code and run the tests. Open you terminal and get ready to run commands on it!
@@ -162,4 +162,4 @@ Finding those indicates that Cpputest is ready to build and execute the tests. T
 
 ----
 
-There is no commit that reflects this exact point of the development cycle since I've forgot to commit it while writing the last post :unamused:. You can check [this commit](https://github.com/matheusmbar/bugfree_robot/tree/b3b89a6c27d8607911186ba315695d4ed045edce) to access it with a few steps ahead while I try some `git black magic` to travel back on time and alter this time line.
+I've done some `git black magic` to reorganize the `bugfree-robot` commits time line since the original publication of this post so now there is a commit that reflects the stage we are at the end of this article. You can check it at [bugfree-robot/added cpputest as submodule](https://github.com/matheusmbar/bugfree_robot/tree/d0d0abeb7c290deed7bb94871421e102b99f0cf4).
