@@ -1,15 +1,35 @@
 @import url(//fonts.googleapis.com/css?family=Ubuntu:500&subset=latin,latin-ext);
+@import url (syntax.css);
+
+/*css color chart: https://www.quackit.com/html/codes/color/html_color_chart.cfm*/
+
+:root {
+	--body-background: #272727;
+	--body: #efefef;
+	--background-darker: #232323;
+	--background-darker: #1A1A1A;
+	--text-over-darker: #fff;
+/*Orange theme*/
+	--article-links: #cc3700;
+	--article-links-hover: orangered;
+	--article-title-links: orangered;
+	--article-title-links-hover: #cc3700;;
+	--article-title: orangered;
+	--highlight-shapes: orangered;
+}
+
 
 body{
-	color: #2c3e50;
+	color: var(--body);
+	background-color: var(--body-background);
 }
 
 .sidebar {
 	position: fixed;
 	top: 0px;
 	padding-top: 10%;
-	background-color: #2c3e50;
-	color: #fff;
+	background-color: var(--background-darker);
+	color: var(--text-over-darker);
 }
 
 .sidebar-header {
@@ -23,7 +43,7 @@ body{
 
 .sidebar-header .title a{
 	text-decoration: none;
-	color: #fff;
+	color: var(--text-over-darker);
 }
 
 a.nav-link {
@@ -35,6 +55,18 @@ a.nav-link i{
 	font-size: 16px;
 }
 a.nav-link:hover { color: #777; }
+
+.navbar-default {
+	background-color: var(--background-darker);
+}
+
+.navbar-default .navbar-nav>li>a {
+    color: var(--text-over-darker);
+}
+
+.navbar-default .navbar-brand {
+	color: var(--text-over-darker);
+}
 
 #bio {
 	font-family: "Courier New", Courier, monospace;
@@ -81,9 +113,18 @@ article .share .gplus:hover {
 	padding-bottom: 10px;
 }
 
+/*page title */
 .page-header {
-	color: #e74c3c;
-	text-shadow: 1px 1px 1px rgba(150, 150, 150, 1);
+	color: #0f8c5a; /* green 2*/
+	font-weight: bolder;
+}
+
+.pager li > a, .pager li > span {
+    /*display: inline-block;*/
+    /*padding: 5px 14px;*/
+    background-color: #232323;
+    /*border: 1px solid #ddd;*/
+    /*border-radius: 15px;*/
 }
 
 @media only screen and (min-width: 768px) {
@@ -112,11 +153,35 @@ article {
 	padding: 0 5% 0;
 }
 
-article.home div a, article.home pre a { color: #2c3e50; }
-article.home div a:hover, article.home pre a:hover { color: #2c3e50; text-decoration: none; }
+/*links in body while reading home*/
+article.home div a, article.home pre a { 
+	color: var(--article-links); 
+}
+article.home div a:hover, article.home pre a:hover { 
+	color: var(--article-links-hover); 
+	text-decoration: none; 
+}
+
+/* links in body while reading an article */
+a {
+    color: var(--article-links);
+}
+
+a:hover{
+	color: var(--article-links-hover);
+	text-decoration: none; 
+}
+
+
 article img { max-width: 100%; }
 
-h1,h2,h3,h4,h5,h6 { font-family: 'Ubuntu', sans-serif; }
+
+
+h1,h2,h3,h4,h5,h6 { 
+	font-family: 'Ubuntu', sans-serif; 
+	color: var(--article-title);
+}
+
 article.home h1,
 article.home h2,
 article.home h3,
@@ -124,20 +189,22 @@ article.home h4,
 article.home h5,
 article.home h6 {
 	font-family: 'Ubuntu', sans-serif;
-	color: #f2756a;
+	color: #f2756a;	/* orange*/
 }
 
+/* home article title links */
 article.home h1 a,
 article.home h2 a,
 article.home h3 a,
 article.home h4 a {
-	color: #f2756a;
+	color: var(--article-title-links);	/* green 1*/
 }
 article.home h1 a:hover,
 article.home h2 a:hover,
 article.home h3 a:hover,
 article.home h4 a:hover {
-	color: #e74c3c;
+	color: var(--article-title-links-hover); /* green 2*/
+	text-decoration: none; 
 }
 
 article.home{
@@ -194,3 +261,24 @@ ul.dropdown-menu>li>a>i.fa {
     width: 1.3em;
 }
 
+/*override inline code background color*/
+code {
+    background-color: #191919;
+}
+
+.btn-default {
+    color: #fff;
+    background-color: var(--background-darker);
+    border-color: #ccc;
+}
+
+blockquote {
+    border-left-color: var(--highlight-shapes);
+    background-color: var(--background-darker);
+}
+
+.pager .disabled>a, .pager .disabled>a:hover, .pager .disabled>a:focus, .pager .disabled>span {
+    color: #999;
+    cursor: not-allowed;
+    background-color: var(--background-darker);
+}
