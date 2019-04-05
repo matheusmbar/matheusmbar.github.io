@@ -7,9 +7,9 @@ comments: true
 footnote: CHECK_EQUAL(2, 0b10)
 ---
 
-Making sure that the source code functions are running and executing everything they are expected to is a really great challenge. The importance of that gets bigger everytime a new library is built and depends on other functions. A basic function that fails can cause serious damage inside a complete firmware.
+Making sure that the source code functions are running and executing everything they are expected to is a really great challenge. The importance of that gets bigger every time a new library is built and depends on other functions. A basic function that fails can cause serious damage inside a complete firmware.
 
-Test Driven Development (TDD) is a tecnique intended to make sure that the source code is correctly coded and tested in most of the possible use cases for it. The programmer will write the test code that calls the functions and check their behavior and return values with different input parameters. The objective is to add as many tests as required to let no unmapped scenario to fail. 
+Test Driven Development (TDD) is a technique intended to make sure that the source code is correctly coded and tested in most of the possible use cases for it. The programmer will write the test code that calls the functions and check their behavior and return values with different input parameters. The objective is to add as many tests as required to let no unmapped scenario to fail. 
 
 The development process can be summarized in:
 1. Understand a new code requirement
@@ -42,7 +42,7 @@ The next post will be just about setting a new project to build tests with Cpput
 
 This function must work with two positive parameters, this is a test for that:
 
-```C
+```c
 TEST(multiply_funtion, two_positives){
 	CHECK_EQUAL(2, multiply(1,2));
 }
@@ -52,7 +52,7 @@ The `CHECK_EQUAL(expected, value)` macro will execute the `multiply(1,2)` and ch
 
 This code won't compile if `multiply(a,b)` is not defined, so let's do it now:
 
-```C
+```c
 uint8_t multiply (uint8_t a, uint8_t b){
 	return 0;
 }
@@ -73,7 +73,7 @@ Errors (1 failures, 1 tests, 1 ran, 1 checks, 0 ignored, 0 filtered out, 0 ms)
 
 It's that clear right? It even says that the error is in the test at line 11 of test source code `multiply_test.cpp`. Let me fix it and run the test again:
 
-```C
+```c
 uint8_t multiply (uint8_t a, uint8_t b){
 	return 2;
 }
@@ -90,7 +90,7 @@ OK (1 tests, 1 ran, 1 checks, 0 ignored, 0 filtered out, 0 ms)
 
 Now it's time to add more tests, so I'm obligated to code for real:
 
-```C
+```c
 TEST(multiply_funtion, two_positives){
 	CHECK_EQUAL( 2, multiply(  1, 2));
 	CHECK_EQUAL(18, multiply(  3, 6));
@@ -111,7 +111,7 @@ Errors (1 failures, 1 tests, 1 ran, 4 checks, 0 ignored, 0 filtered out, 1 ms)
 ```
 
 Than can be fixed with the code anyone would insert just in the beginning:, and the tests will pass again. 
-```C
+```c
 uint8_t multiply (uint8_t a, uint8_t b){
 	return a*b;
 }
@@ -126,7 +126,7 @@ OK (1 tests, 1 ran, 4 checks, 0 ignored, 0 filtered out, 0 ms)
 Remember the request about positive and negative inputs? It's time to test it. The `two_positives` test will be kept as last shown and another one will be created now.
 
 
-```C
+```c
 TEST(multiply_funtion, two_negatives){
 	CHECK_EQUAL( 15, multiply(-5, -3));
 }
@@ -142,7 +142,7 @@ bugfree_robot/test/multiply_test.cpp:16:28: error: unsigned conversion from ‘i
 
 Remember the function signature was defined with two `uint8` variables as parameters? Those are unsigned and don't allow negative values. It mus get fixed before continuing:
 
-```C
+```c
 uint8_t multiply (int8_t a, int8_t b){
 	return a*b;
 }
@@ -150,7 +150,7 @@ uint8_t multiply (int8_t a, int8_t b){
 
 The best part is that this test is already passing right now and two tests will be added:
 
-```C
+```c
 TEST(multiply_funtion, opposite_signs){
 	CHECK_EQUAL(-20, multiply(-10,  2));
 	CHECK_EQUAL(-30, multiply( 10, -2));
@@ -171,14 +171,14 @@ Errors (1 failures, 3 tests, 3 ran, 6 checks, 0 ignored, 0 filtered out, 0 ms)
 ```
 
 And the simple fix is done by changing the return type:
-```C
+```c
 int8_t multiply (int8_t a, int8_t b){
 	return a*b;
 }
 ``` 
 
 It is traditional to test if the behavior is kept correct at maximum/minimum parameter values:
-```C
+```c
 TEST(multiply_funtion, max_min_values){
 	CHECK_EQUAL( 16129, multiply( 127,  127));
 	CHECK_EQUAL( 16384, multiply(-128, -128));
@@ -198,7 +198,7 @@ Errors (1 failures, 4 tests, 4 ran, 7 checks, 0 ignored, 0 filtered out, 0 ms)
 ```
 
 An 8bit return value is not able to hold the multiplication of two 8bit values. It must be increased to 16bits:
-```
+```c
 int16_t multiply (int8_t a, int8_t b){
 	return (int16_t)(a*b);
 }
