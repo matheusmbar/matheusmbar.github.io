@@ -30,6 +30,8 @@ gcc --version
 g++ --version
 make --version
 git --version
+autoreconf --version
+libtool --version
 ```
 
 No command shall return `command not found`. Check the if the messages are similar to mine listed below:
@@ -64,6 +66,30 @@ There is NO WARRANTY, to the extent permitted by law.
 $ git --version
 git version 2.19.1
 ```
+
+```bash
+$ autoreconf --version
+autoreconf (GNU Autoconf) 2.69
+Copyright (C) 2012 Free Software Foundation, Inc.
+License GPLv3+/Autoconf: GNU GPL version 3 or later
+<http://gnu.org/licenses/gpl.html>, <http://gnu.org/licenses/exceptions.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Written by David J. MacKenzie and Akim Demaille.
+```
+
+```bash
+$ libtool --version
+libtool (GNU libtool) 2.4.6
+Written by Gordon Matzigkeit, 1996
+
+Copyright (C) 2014 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+```
+
+In Ubuntu `libtool` is installed through `sudo apt install libtool` but it comes without an easy way to check if it is installed and its version. I've installed `libtool-bin` so the above command works.  
 
 Take your time to make all of them work since there is no point in trying to execute the next steps otherwise. 
 
@@ -127,7 +153,15 @@ Check that Cpputest files got downloaded.
 ls test/cpputest
 ```
 
-No need to pay much attention to the filenames, just check that there are tens of them (something around 40 ~ 50) and go to the next section.
+No need to pay much attention to the filenames, just check that there are tens of them (something around 40 ~ 50) and go to the next section. In some cases the submodule files may not be initialized automatically (as when you clone the repository in another workstation), it is simple to solve:
+
+```bash
+# go inside submodule folder
+cd test/cpputest
+git submodule update --init
+# check that the files are present now
+ls
+```
 
 ## Build Cpputest
 
