@@ -6,4 +6,3 @@ tags: [embedded, hardware]
 comments: true
 footnote: Blinking LEDs without LEDs!
 ---
-
