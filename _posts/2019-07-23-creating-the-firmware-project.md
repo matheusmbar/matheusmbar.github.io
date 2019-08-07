@@ -11,7 +11,7 @@ Now that TDD and the hardware got explained we are allowed to start creating the
 
 The mock library will be included to simulate the calls to the HAL (Hardware Abstraction Layer) that usually interacts with the microcontroller peripherals. This is a powerful resource that allows building, executing and testing functions that are in the lower levels of the firmware architecture and wouldn't run outside the target device. 
 
-The CppUTest comes with the CppUMock library and provides special configurations to inform which source codes are included just as mocks for other source codes. The mock's function is to provide a way to monitor how the code under test is interacting with other libraries, capturing information about which functions got called, which parameters were provided to them and choose the return values for each call.
+The Cpputest repository comes with the Cppumock framework and provides special configurations to inform which source codes are included just as mocks for other source codes. The mock's function is to provide a way to monitor how the code under test is interacting with other libraries, capturing information about which functions got called, which parameters were provided to them and choose the return values for each call.
 
 <!--more-->
 

@@ -149,6 +149,12 @@ article{
 	letter-spacing: 3px;
 }
 
+.center-image
+{
+    margin: 0 auto;
+    display: block;
+}
+
 article {
 	padding: 0 5% 0;
 }
