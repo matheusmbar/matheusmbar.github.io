@@ -11,19 +11,15 @@
 	<!-- Enable responsive viewport -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
-	<!--[if lt IE 9]>
-	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
-{% if site.google_tagmanager and jekyll.environment == 'production'%}
 	<!-- Google Tag Manager -->
+	{% if site.google_tagmanager %}
 	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 	})(window,document,'script','dataLayer','GTM-5G8JWVF');</script>
+	{% endif %}
 	<!-- End Google Tag Manager -->
-{% endif %}
 
 	<!-- Le styles -->
 	<link href="{{ site.BASE_PATH }}/assets/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -31,24 +27,17 @@
 	<link href="{{ site.BASE_PATH }}/assets/resources/syntax/syntax.css" rel="stylesheet">
 	<link href="{{ site.BASE_PATH }}/assets/css/style.css" rel="stylesheet">
 
-	<!-- Le fav and touch icons -->
-	<!-- Update these with your own images
-	<link rel="shortcut icon" href="images/favicon.ico">
-	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
-	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
-	-->
 
 	<link rel="alternate" type="application/rss+xml" title="{{ site.name }}" href="{{ site.BASE_PATH }}/feed.xml">
 </head>
 
 <body>
-	{% if site.google_tagmanager and jekyll.environment == 'production'%}
 	<!-- Google Tag Manager (noscript) -->
+	{% if site.google_tagmanager %}
 	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5G8JWVF"
 	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-	<!-- End Google Tag Manager (noscript) -->
 	{% endif %}
+	<!-- End Google Tag Manager (noscript) -->
 
 	<nav class="navbar navbar-default visible-xs" role="navigation">
 		<!-- Brand and toggle get grouped for better mobile display -->
@@ -60,22 +49,27 @@
 				<span class="icon-bar"></span>
 			</button>
 			{% if site.author.github %}
-			<a type="button" class="navbar-toggle nav-link" href="http://github.com/{{ site.author.github }}">
+			<a type="button" class="navbar-toggle nav-link" href="http://github.com/{{ site.author.github }}" rel="noopener noreferrer" target="_blank" onclick="dataLayer.push({'event': 'github-button-click'});">
 				<i class="fa fa-github"></i>
 			</a>
 			{% endif %}
 			{% if site.author.twitter %}
-			<a type="button" class="navbar-toggle nav-link" href="http://twitter.com/{{ site.author.twitter }}">
+			<a type="button" class="navbar-toggle nav-link" href="http://twitter.com/{{ site.author.twitter }}" rel="noopener noreferrer" target="_blank" onclick="dataLayer.push({'event': 'twitter-button-click'});">
 				<i class="fa fa-twitter"></i>
 			</a>
 			{% endif %}
 			{% if site.author.email %}
-			<a type="button" class="navbar-toggle nav-link" href="mailto:{{ site.author.email }}">
+			<a type="button" class="navbar-toggle nav-link" href="mailto:{{ site.author.email }}" onclick="dataLayer.push({'event': 'email-button-click'});">
 				<i class="fa fa-envelope"></i>
 			</a>
 			{% endif %}
+			{% if site.author.linkedin %}
+			<a type="button" class="navbar-toggle nav-link" href="https://linkedin.com/in/{{ site.author.linkedin }}" onclick="dataLayer.push({'event': 'linkedin-button-click'});">
+				<i class="fa fa-linkedin"></i>
+			</a>
+			{% endif %}
 			<a class="navbar-brand" href="{{ site.BASE_PATH }}/">
-				<img src="//www.gravatar.com/avatar/{{site.author.email_md5}}?s=35" class="img-circle" />
+<!-- 				<img src="//www.gravatar.com/avatar/{{site.author.email_md5}}?s=35" class="img-circle" /> -->
 				{{ site.title }}
 			</a>
 		</div>
@@ -114,7 +108,7 @@
 		<footer>
 			<hr/>
 			<p>
-				&copy; {{ site.time | date: '%Y' }} {{ site.author.name }} with <a href="http://jekyllrb.com/">Jekyll</a>. Theme: <a href="https://github.com/dbtek/dbyll">dbyll</a> by dbtek.
+				&copy; {{ site.time | date: '%Y' }} {{ site.author.name }} with <a href="http://jekyllrb.com/">Jekyll</a>. Theme: <a href="https://github.com/dbtek/dbyll">dbyll</a> by dbtek. Environment {{jekyll.environment}}
 			</p>
 		</footer>
 	</div>

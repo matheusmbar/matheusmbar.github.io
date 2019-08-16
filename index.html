@@ -33,7 +33,7 @@ tagline:
   {{ post.description }}
   {% else %}
   {{ post.excerpt }}
-  <a class="btn btn-default" href="{{ site.BASE_PATH }}{{ post.url }}">Continue reading...</a>
+  <a class="btn btn-default" href="{{ site.BASE_PATH }}{{ post.url }}" onclick="dataLayer.push({'event': 'continue-click','post': '{{ post.title }}'});">Continue reading...</a>
   {% endif %}
   {% endif %}
   </div>
