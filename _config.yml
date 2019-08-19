@@ -17,7 +17,7 @@ defaults:
     scope:
       path: "" # empty string for all files
     values:
-      title: Matheus Marques
+      title: matheusmbar
 
 description: A journey about developing embedded systems
 author:
@@ -44,3 +44,4 @@ BASE_PATH:
 plugins:
   - jekyll-paginate
   - jemoji
+  - jekyll-target-blank
