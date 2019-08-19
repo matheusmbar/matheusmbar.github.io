@@ -35,6 +35,7 @@ excerpt_separator: <!--more-->
 rss_path: feed.xml
 categories_path: categories.html
 tags_path: tags.html
+enable_analytics: true
 
 # set it as url of an image
 # sidebar_background_image: https://www.dropbox.com/s/g9h23zrycedxtk5/sky.png?raw=1
