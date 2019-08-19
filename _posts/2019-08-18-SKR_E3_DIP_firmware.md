@@ -89,6 +89,12 @@ This file defines what will be compiled and how it will be done by PlatformIO. T
 default_envs = BIGTREE_SKR_MINI
 ```
 
+Since many ones questioned me about this, let me be it very clear about this file. This instruction section from [BIGTREETECH-SKR-E3-DIP-V1.0 firmware repository](https://github.com/bigtreetech/BIGTREETECH-SKR-E3-DIP-V1.0/tree/master/Firmware) (sorry BTT but i had to fix some English mistakes in your instructions):
+
+>  If you have downloaded from Marlin bugfix-2.0.x Official version please modify here from `TMCStepper@<1.0.0` to `https://github.com/bigtreetech/TMCStepper`
+
+This change is not required anymore. The line I've showed above is the only one I've changed in `platformio.ini`.
+
 ### `Marlin/Configuration.h`
 
 This is the file that holds configurations about the printer, the controller PCB and most of Marlin features. There are a lot of changes so I will only indicate the parameters that I've set. Look for them in the file and replace with what I list here. 
@@ -158,6 +164,8 @@ Mesh bed leveling is the best feature I've find to hel in first layer adhesion. 
 #define EEPROM_AUTO_INIT
 ```
 
+The last two lines enable the EEPROM emulation in the firmware. It will create a `.dat` file in the SD Card and use it to store configurations as the mesh bed leveling calibration heights.
+
 ### `Marlin/Configuration_adv.h`
 
 There is only one change in this file that I'd list as required if using Trinamic drivers, uncomment this line:
@@ -202,15 +210,12 @@ This article is my contribution to organizing all the info I define as required 
 
 I've read many reports about problems with the board malfunctioning or not working with BL Touch sensors. I can't comment anything about it since mine is working great since I got it. The only problem detected is that the hod end thermistor reads incorrectly when the board is powered by the USB before the main power input but this is listed in Marling issues so doesn't seem like a hardware problem. 
 
-I'm letting available my modified files. Feel free to download them and comparing with yours or simply using them to put your PCB to work. 
+I'm letting available my modified files. Feel free to download them and compare with yours or simply using them to put your PCB to work. 
 
 - [`platformio.ini`](/assets/files/2019-08-18/platformio.ini)
 - [`Marlin/Configuration.h`](/assets/files/2019-08-18/Configuration.h)
 - [`Marlin/Configuration_adv.h`](/assets/files/2019-08-18/Configuration_adv.h)
 
-> PS: I may have uploaded the wrong `platformio.ini` file in here because there were more than one Marlin firmware folder in my computer. I'm gonna check this and update this file as soon as possible.  
-> I'm uploading another version for now that complies with the changes I've indicated in the article. I belive it is the one I've used for my printer. 
-> I will keep only the right one as soon as I can access my laptop and check all this. Sorry for the trouble.
-
-
-- [`platformio_v2.ini`](/assets/files/2019-08-18/platformio_v2.ini)
+> PS: I've messed up about where the correct Marlin firmware files were in my laptop and uploaded the wrong files here in the first publication of this article (at August 18th 2019). 
+> 
+> Please use the new ones (uploaded at August 19th 2019), the only ones available now, so no chance of getting the wrong ones.
