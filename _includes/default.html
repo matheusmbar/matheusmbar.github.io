@@ -11,15 +11,17 @@
 	<!-- Enable responsive viewport -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<!-- Google Tag Manager -->
-	{% if site.google_tagmanager %}
+	{% if site.enable_analytics %}
+	<!-- Google Tag Manager (script)-->
 	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 	})(window,document,'script','dataLayer','GTM-5G8JWVF');</script>
+	<!-- End Google Tag Manager (script)-->
+	{% else %}
+	<!-- Google Tag Manager (script) is disabled -->
 	{% endif %}
-	<!-- End Google Tag Manager -->
 
 	<!-- Le styles -->
 	<link href="{{ site.BASE_PATH }}/assets/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -32,12 +34,14 @@
 </head>
 
 <body>
+	{% if site.enable_analytics %}
 	<!-- Google Tag Manager (noscript) -->
-	{% if site.google_tagmanager %}
 	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5G8JWVF"
 	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-	{% endif %}
 	<!-- End Google Tag Manager (noscript) -->
+	{% else %}
+	<!-- Google Tag Manager (noscript) is disabled -->
+	{% endif %}
 
 	<nav class="navbar navbar-default visible-xs" role="navigation">
 		<!-- Brand and toggle get grouped for better mobile display -->
