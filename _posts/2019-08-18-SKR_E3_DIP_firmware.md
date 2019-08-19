@@ -208,3 +208,9 @@ I'm letting available my modified files. Feel free to download them and comparin
 - [`Marlin/Configuration.h`](/assets/files/2019-08-18/Configuration.h)
 - [`Marlin/Configuration_adv.h`](/assets/files/2019-08-18/Configuration_adv.h)
 
+> PS: I may have uploaded the wrong `platformio.ini` file in here because there were more than one Marlin firmware folder in my computer. I'm gonna check this and update this file as soon as possible.  
+> I'm uploading another version for now that complies with the changes I've indicated in the article. I belive it is the one I've used for my printer. 
+> I will keep only the right one as soon as I can access my laptop and check all this. Sorry for the trouble.
+
+
+- [`platformio_v2.ini`](/assets/files/2019-08-18/platformio_v2.ini)
