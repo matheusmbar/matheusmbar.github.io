@@ -93,7 +93,7 @@ Since many ones questioned me about this, let me be it very clear about this fil
 
 >  If you have downloaded from Marlin bugfix-2.0.x Official version please modify here from `TMCStepper@<1.0.0` to `https://github.com/bigtreetech/TMCStepper`
 
-This change is not required anymore. The line I've showed above is the only one I've changed in `platformio.ini`.
+This change is not required anymore when cloning the newest Marlin version as I've descrive in this article. The line I've showed above is the only one I've changed in `platformio.ini`. This change is required only when using BTT firmware repository, what I don't recommend.
 
 ### `Marlin/Configuration.h`
 
