@@ -27,7 +27,7 @@ The heart of any 3D printer is its controller PCB that includes a microcontrolle
 
 ## Update reasons
 
-The main reason for this post is documenting the process of my latest upgrade that was replacing the original PCB controller board with [BIGTREETECH SKR E3 DIP V1.0](aliexpress.com/item/33052767749.html). There were two main motivations for it:
+The main reason for this post is documenting the process of my latest upgrade that was replacing the original PCB controller board with [BIGTREETECH SKR E3 DIP V1.0](https://www.aliexpress.com/item/33052767749.html). There were two main motivations for it:
 
 1. getting a most capable/faster microcontroller running the PCB, what can result in better prints and firmware space for additional Marlin features
 2. replacing the original A4988 motor drivers with better ones from Trinamic as the TMC2208
@@ -89,7 +89,7 @@ This file defines what will be compiled and how it will be done by PlatformIO. T
 default_envs = BIGTREE_SKR_MINI
 ```
 
-Since many ones questioned me about this, let me be it very clear about this file. This instruction section from [BIGTREETECH-SKR-E3-DIP-V1.0 firmware repository](https://github.com/bigtreetech/BIGTREETECH-SKR-E3-DIP-V1.0/tree/master/Firmware) (sorry BTT but i had to fix some English mistakes in your instructions):
+Since many ones questioned me about this, let me be it very clear about this file. This instruction section from [BIGTREETECH-SKR-E3-DIP-V1.0 firmware repository](https://github.com/bigtreetech/BIGTREETECH-SKR-E3-DIP-V1.0/tree/master/Firmware) (sorry BTT but I had to fix some English mistakes in your instructions):
 
 >  If you have downloaded from Marlin bugfix-2.0.x Official version please modify here from `TMCStepper@<1.0.0` to `https://github.com/bigtreetech/TMCStepper`
 
