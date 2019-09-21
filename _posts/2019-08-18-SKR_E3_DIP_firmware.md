@@ -69,16 +69,17 @@ I've cloned the full repository in the computer, copied one of those `tmc2208` f
 
 The TMC2208 drivers require shorting a few pads to connect the UART pins to the pin header. [This instructable](https://www.instructables.com/id/TMC2208-UART-on-BigTreeTechBIQU-SKR-V11-and-V13-Co/) has a great description about executing this at `Step 1: Modify Your Driver Modules...maybe`. This PCB removes the need for any external wiring so all other steps on the guide may be ignored.
 
-I've set the jumpers as indicated in `SKR E3 DIP V1.0 Manual.pdf` (inside the repository) to work with the TMC2208 in UART mode and inserted one of the drivers in the PCB. Sending `M122` gcode to the board at this moment returns information about the Trinamic motor drivers, at least it should. The answer from the board showed that no driver was connected. Long history short (that took me a whole day to find out): the drivers won't communicate if the board is powered just from the USB connector, they need the 24V input connected. All 4 drivers communicated correctly after this.
+I've set the jumpers as indicated in `SKR E3 DIP V1.0 Manual.pdf` (inside the repository) to work with the TMC2208 in UART mode and inserted one of the drivers in the PCB. Sending `M122` gcode to the board at this moment returns information about the Trinamic motor drivers, at least it should. The answer from the board showed that no driver was connected. Long history short (that took me a whole day to find out): the drivers won't communicate if the board is powered just from the USB connector, they **need the 24V input connected**. All 4 drivers communicated correctly after this.
 
 
 ## Setting Marlin firmware from scratch (it is actually easy)
 
 As an embedded developer I always prefer to setup as most as I can manually when building Marlin firmware. After compiling the Marlin firmware version from Bigtreetech's repository, trying to configure a few months old original Marlin firmware and recently cloned original Marlin firmware a few times, while comparing everything that is changed in their repository, I've come to a simple recipe on how to do it properly.
 
-The main tip is completely ignoring the Firmware folder from [BIGTREETECH-SKR-E3-DIP-V1.0 GitHub repository](https://github.com/bigtreetech/BIGTREETECH-SKR-E3-DIP-V1.0/). The only useful info there is the hardware related PDFs and images. 
-
 Get the newest version of Marlin Firmware at its [GitHub repository on branch `bugfix-2.0.x`](https://github.com/MarlinFirmware/Marlin/tree/bugfix-2.0.x). Go to `Clone or download` or just [click here](https://github.com/MarlinFirmware/Marlin/archive/bugfix-2.0.x.zip). Unzip this folder and open it on VSCode with PlatformIO (look for Marlin tutorials/documentation on how to setup it if this is your first time doing it).
+
+**:warning: Warning:**
+Marlin firmware is a big project that evolves really fast due to the amount of people contributing on it. This is really good but brings a side effect that articles like this one may (or may not) get partially  outdated a few days or weeks after published. At the moment I'm publishing this article the changes indicated, as well as all files attached in the end, are based on [this firmware version](https://github.com/MarlinFirmware/Marlin/tree/7fc4f7b815949eb9ec4b8e7c5399d154d0f28c94) (released at September 21st, 2019). I always recommend using the latest Marlin version but try [downloading this version](https://github.com/MarlinFirmware/Marlin/archive/7fc4f7b815949eb9ec4b8e7c5399d154d0f28c94.zip) if the latest one is getting you in any trouble while following this article.
 
 There are only 3 files that require changes for this to work, I'll go trough each one of them next. 
 
@@ -86,14 +87,34 @@ There are only 3 files that require changes for this to work, I'll go trough eac
 
 This file defines what will be compiled and how it will be done by PlatformIO. There is only one change required and it is right in the start of the file. Set `default_envs` to:
 ```
-default_envs = BIGTREE_SKR_MINI
+default_envs = STM32F103R_bigtree   
 ```
 
-Since many ones questioned me about this, let me be it very clear about this file. This instruction section from [BIGTREETECH-SKR-E3-DIP-V1.0 firmware repository](https://github.com/bigtreetech/BIGTREETECH-SKR-E3-DIP-V1.0/tree/master/Firmware) (sorry BTT but I had to fix some English mistakes in your instructions):
+> PS: I've posted this article stating that a change listed as required by BTT in Marlin firmware about TMCStepper library was not required. 
+> I'd like to apologize to anyone that followed my instructions before and they didn't work.
+I'm updating this section since a change is actually required, but their information about how to do it is not all correct. Follow on that all required changes are fixed and indicated below.
+
+BIGTREETECH has this instruction section at [BIGTREETECH-SKR-E3-DIP-V1.0 firmware repository](https://github.com/bigtreetech/BIGTREETECH-SKR-E3-DIP-V1.0/tree/master/Firmware) (sorry BTT but I had to fix some English mistakes in your instructions):
 
 >  If you have downloaded from Marlin bugfix-2.0.x Official version please modify here from `TMCStepper@<1.0.0` to `https://github.com/bigtreetech/TMCStepper`
 
-This change is not required anymore when cloning the newest Marlin version as I've descrive in this article. The line I've shown above is the only one I've changed in `platformio.ini`. This change is required only when using BTT firmware repository, what I don't recommend.
+Without this change the firmware will compile with no errors but the UART communication between the microcontroller and the TMC2208s will not work since a *fake* `SoftwareSerial` library will be used by Marlin firmware. Although, executing this change will result in build errors due to conflicts in the firmware. 
+
+The correct procedure is this one:
+
+1. Replace this `TMCStepper@<1.0.0` by this `https://github.com/bigtreetech/TMCStepper` in `platformio.ini`. It is around line 30.
+
+2. Locate this: `[env:STM32F103R_bigtree]`. It is a code block that sets parameters used to build firmware for the SKR E3 DIP. It is required to add ` -DHAVE_SW_SERIAL` in the variable `build_flags` of this code block. It will look like this )I've hidden the other lines since no change is required on any of them:
+
+```
+[env:STM32F103R_bigtree]
+(...)
+build_flags       = !python Marlin/src/HAL/HAL_STM32F1/build_flags.py
+  ${common.build_flags} -DDEBUG_LEVEL=0 -std=gnu++14 -DHAVE_SW_SERIAL
+(...)
+```
+
+That is it, no additional change is required in this file.
 
 ### `Marlin/Configuration.h`
 
@@ -154,52 +175,70 @@ This is the end of the required changes in this file to put the board to work. I
 #define PREHEAT_2_FAN_SPEED   255 // Value from 0 to 255
 ```
 
-Mesh bed leveling is the best feature I've find to hel in first layer adhesion. My printer bed has a pronounced unleveling in its center and this technique can compensate that without requiring any additional sensor. These changes are required in this file to make it work:
+Mesh bed leveling is the best feature I've find to help in first layer adhesion. My print bed has a pronounced unleveling in its center and this technique can compensate that without requiring any additional sensor. These changes are required in this file to make it work:
 ```
-#define PROBE_MANUALLY
-#define MESH_BED_LEVELING
+#define MESH_BED_LEVELING ---
 #define RESTORE_LEVELING_AFTER_G28
 #define MESH_INSET 35
+#define LCD_BED_LEVELING
 #define EEPROM_SETTINGS
 #define EEPROM_AUTO_INIT
 ```
 
 The last two lines enable the EEPROM emulation in the firmware. It will create a `.dat` file in the SD Card and use it to store configurations as the mesh bed leveling calibration heights.
 
+I've made this last change to use `ADVANCED_PAUSE_FEATURE` and get a better pause behavior while using Cura:
+```
+#define NOZZLE_PARK_FEATURE
+```
+
 ### `Marlin/Configuration_adv.h`
 
-There is only one change in this file that I'd list as required if using Trinamic drivers, uncomment this line:
+There is no change required in this file although I'm listing here all the ones that I've executed on it.
+
+There are many tutorials about using TMC drivers in the Ender 3 printer that recommend reducing the motor current values, as [this one from Teaching Tech](https://www.youtube.com/watch?v=7VHwcEroHPk). I've printed many hours without doing this change but realized that the X and Y motors get hot while printing and decided to apply this change. Not sure if it changed so much at this moment.
+```
+#define X_CURRENT     760
+#define Y_CURRENT     760
+#define Z_CURRENT     760
+#define E0_CURRENT    900
+```
+
+I recommend enabling this one when using Trinamic drivers since it will improve M122 output with many parameters about them and may be helpful at some poing. Just uncomment this line:
 ```
 #define TMC_DEBUG
 ```
 
-I have some personal changes listed below that I recommend analysing if they make sense to you or not. They are basically uncomment lines:
+I have some additional personal changes listed below that I recommend analysing if they make sense to you or not. They are basically uncomment lines:
 ```
 #define QUICK_HOME
-
 #define LCD_INFO_MENU
 #define STATUS_MESSAGE_SCROLLING
+#define LCD_SET_PROGRESS_MANUALLY
 #define SCROLL_LONG_FILENAMES
 #define BABYSTEPPING
 #define DOUBLECLICK_FOR_Z_BABYSTEPPING
+#define ADVANCED_PAUSE_FEATURE
 ```
 
 ### Building the firmware
 
 Save all the changed files and build the firmware (click in the  :heavy_check_mark: at the bottom left). Check the TERMINAL log for any errors (red lines). There will be many warning (yellow lines) but just ignore them. The crucial part is making sure that this line is shown:
 ```
-Environment BIGTREE_SKR_MINI            [SUCCESS]
+Environment STM32F103R_bigtree            [SUCCESS]
 ```
 
-The next step is going to the folder `Marlin/.pioenvs/BIGTREE_SKR_MINI` and copying the file `firmware.bin` to the SD Card (this name must be kept). Insert the SD card  in the board and power cycle it. The BLUE LED will blink while the firmware is updating. The board will boot up after the update is finished. I recommend removing the SD card from the printer at this moment and renaming the `firmware.bin` file to something like `firmware_current.bin` so the PCB won't run the update every time it boots up.
+The next step is going to the folder `Marlin/.pioenvs/BIGTREE_SKR_MINI` and copying the file `firmware.bin` to the SD Card (this name must be kept). Insert the SD card  in the board and power cycle it. The BLUE LED will blink while the firmware is updating. The board will boot up after the update is finished. 
 
-This procedure will be the same for updating the firmware in the future to make changes in parameters and features. I recommend not deleting the `firmware_current.bin` from the previous update before checking that everything is working as expected so there is an easy backup to run to if something foes south.
+I recommend removing the SD card from the printer at this moment and renaming the `firmware.bin` file to something like `firmware_current.bin` so the PCB won't run the update every time it boots up. Sometimes the firmware is automatically renamed to `FIRMWARE.CUR` and sometimes it is not, I didn't get the reason yet.
+
+This procedure will be the same for updating the firmware in the future to make changes in parameters and features. I recommend not deleting the `firmware_current.bin` from the previous update before checking that everything is working as expected so there is an easy backup to run to if something goes south. keeping an archive with old working firmware binaries is a good idea too.
 
 ## Installing the PCB
 
 This step takes some time but is pretty straightforward. The only annoying aspect is the small space to work on and the cables that are only as long as they are required to be. Just check if all cables are labeled correctly and add labels to the ones that are not. Disconnect them carefully and free the PCB from all wires and screws. Place the SKR E3 DIP and execute the reverse process, holding it with the screws, connecting the power cables (always pay attention to polarity of the main 24V input and the PCB board cooling fan), motors, end stops, thermistors, hot end and heated bed. 
 
-One mistake I made was misinserting the hot end cable under the correct place in the connector. It looked like correctly connected when checked from over it. When testing the hot end heating for the first time I've started to see some smoke coming from the PCB and turned its power off right way. It turns out the misconnection as resulting in the wire heating inside the connector and starting to melt it. No serious damage due that and easily fixed at that point but it is the kind of thing that could result in a fire if not detected.
+One mistake I made was misinserting the hot end cable **under** the correct place in the connector. It looked like correctly connected when checked from above it. When testing the hot end heating for the first time I've started to see some smoke coming from the PCB and turned its power off right way. It turns out the misconnection was resulting in the wire heating inside the connector and starting to melt it. No serious damage came due that and it got easily fixed at that point. Take care about it since it is the kind of thing that could result in a fire if not detected soon enough.
 
 
 ## Closing thoughts
@@ -208,14 +247,21 @@ It took some time for me to understand that the Bigtreetech Marlin firmware was 
 
 This article is my contribution to organizing all the info I define as required on putting this PCB to work as a drop in replacement for the original Melzi PCB in the Ender 3 printer. 
 
-I've read many reports about problems with the board malfunctioning or not working with BL Touch sensors. I can't comment anything about it since mine is working great since I got it. The only problem detected is that the hod end thermistor reads incorrectly when the board is powered by the USB before the main power input but this is listed in Marling issues so doesn't seem like a hardware problem. 
+I've read many reports about problems with the board malfunctioning or not working with BL Touch sensors. I can't comment anything about it since mine is working great since I got it and without this sensor. I've had only two problems with it at until this moment:
+- The hot end thermistor reads incorrectly when the board is powered by the USB before the main power input but this is listed in Marling issues so doesn't seem like a hardware problem
+- One day I've started a print and the stepper motors were moving double that distance that they should, forcing the bed beyond its limit. I never understood what happened there and a simple power cycle solved it.
 
-I'm letting available my modified files. Feel free to download them and compare with yours or simply using them to put your PCB to work. 
+
+I'm letting available my modified files (updated at september 21st, 2019). Feel free to download them and compare with yours or simply using them to put your PCB to work. 
+I've uploaded the `firmware_E3_DIP_2208_09-21-2019.bin` too. It has everything listed in this article and only what is listed here. Use it at your own risk after checking that you agree with every change I've done here. Rename it to `firmware.bin` and follow the update procedure as indicated above.
 
 - [`platformio.ini`](/assets/files/2019-08-18/platformio.ini)
 - [`Marlin/Configuration.h`](/assets/files/2019-08-18/Configuration.h)
 - [`Marlin/Configuration_adv.h`](/assets/files/2019-08-18/Configuration_adv.h)
+- [`firmware_E3_DIP_2208_09-21-2019.bin`](/assets/files/2019-08-18/firmware_E3_DIP_2208_09-21-2019.bin)
 
 > PS: I've messed up about where the correct Marlin firmware files were in my laptop and uploaded the wrong files here in the first publication of this article (at August 18th 2019). 
 > 
-> Please use the new ones (uploaded at August 19th 2019), the only ones available now, so no chance of getting the wrong ones.
+> ~~Please use the new ones (uploaded at August 19th 2019), the only ones available now, so no chance of getting the wrong ones.~~
+> 
+> I'm replacing all the files again (at September 21st, 2019) due to some fixes and updates in the procedure and removing the old ones.
