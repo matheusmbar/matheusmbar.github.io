@@ -1,6 +1,6 @@
 ---
 layout: post
-title: setting up automatic tests to point your errors
+title: setting up automatic tests to pinpoint your errors
 categories: [bugfree-robot]
 tags: [embedded, hardware]
 comments: true
