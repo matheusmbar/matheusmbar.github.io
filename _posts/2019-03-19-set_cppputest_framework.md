@@ -11,7 +11,7 @@ The [last post]({{ site.baseurl }}{% post_url 2019-02-25-what_is_tdd %}) showed 
 
 The way I'm used to build projects with TDD is including the Cpputest inside the project directory, it helps on setting the build environment and replicating it consistently along the development team. I recommend it even for one man projects so it works the same way in both situations. 
 
-I strongly recommend creating a repository on [Github](https://github.com/) or [Gitlab](https://gitlab.com/) to host you project. It will allow a future step of running a continuous integration build server, that will check every commit executed for failures on the tests. More on that in a future post. 
+I strongly recommend creating a repository on [Github](https://github.com/) or [Gitlab](https://gitlab.com/) to host you project. It will allow a future step of running a continuous integration build server, that will check every commit executed for failures on the tests. More on that in a future post (EDIT from the future: check it [here]({{ site.baseurl }}{% post_url 2019-10-09-setting_up_build_server %}) after reading this one). 
 
 <!--more--> 
 
