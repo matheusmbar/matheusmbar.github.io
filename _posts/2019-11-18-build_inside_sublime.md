@@ -20,7 +20,6 @@ The menu "Tools >> Build System" lists a few languages that Sublime is able to b
 {
     "shell_cmd": "make"
 }
-
 ```
 
 Nothing more than the regular Java Script like structure that holds many other Sublime configuration profiles like default indentation procedure, language specific configurations and color syntax profile. It shows a `make` command already but it does not seem possible to be as simple as this, but it is almost that. The only required fix here is forcing this command to run inside the correct folder. In my case it is `bugfree_robot/test` so the first step is getting inside this folder. I'm used to (and recommend doing so) go to "File >> Open Folder..." and selecting my repository folder when working on something. This will show the folder tree in the window's left side section. 
