@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Upgrading Ender 3 controller board
+title: upgrading Ender 3 controller board
 categories: [3D Printer]
 tags: [Ender 3, embedded, Marlin]
 comments: true

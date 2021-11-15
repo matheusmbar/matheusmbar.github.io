@@ -11,11 +11,10 @@ There will always be peripherals to use and drivers to implement in embedded pro
 
 With that out of the way, this post will be the first of a few ones that won't include test code, they are actually the working result and documentation of a learning through development and testing process I took recently. These efforts tend to get closer to [Extreme Go Horse](https://medium.com/@dekaah/22-axioms-of-the-extreme-go-horse-methodology-xgh-9fa739ab55b4) programming than to TDD actually 👀 but they are an important part of the journey. 
 
-# UART
-
 I've been thinking about the development of a communication protocol and drivers for the bugfree-robot. Its hardware design provides three main communication ports: 2 full duplex UARTs and one USB port. None of them would work directly for wireless telemetry (USB for sure not) although  it is possible to connect simple and cheap Bluetooth-serial modules like the HC-05, HC-06, HM-10 or similar. They don't allow a high throughput but it may be enough for transmitting information about its sensors and control parameters. 
 
 <!--more-->
+# UART
 
 UART (Universal Asynchronous Receiver/Transmitter) is one of the most common communication methods in not so advanced embedded systems and is basically a full-duplex Asynchronous interface. There is no clock line so both devices must keep track of their own timing to transmit and receive each byte correctly. Many microcontrollers provide a more enhanced peripheral called USART (Universal Synchronous/Asynchronous Receiver/Transmitter) that is compatible with UART too. 
 
@@ -25,7 +24,7 @@ An interface driver is usually implemented to interface ths peripheral with the 
 ## Transmitting data (TX)
 
 
-Transmitting data continuously is almost as easy as one may think. As long as the application always has data to transmit, it is usually as simple as calling some sort of `UART_Transmit(char* data, uint8_t len)` as long as needed. The next transmission may start after it has finished transmitting this data array. The `HAL_UART` default library provided for the STM32 includes three functions for this task:
+Transmitting data continuously is almost as easy as one may think. As long as the application always has data to transmit, it is usually as simple as calling some sort of `UART_Transmit(char* data, uint8_t len)` as many times as needed. The next transmission may start after it has finished transmitting this data array. The `HAL_UART` default library provided for the STM32 includes three functions for this task:
 
 ### 1. **HAL_UART_Transmit**
    

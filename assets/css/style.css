@@ -77,11 +77,8 @@ a.nav-link:hover { color: #777; }
 
 #contact-list li .fa,
 article .share .btn {
-	-o-transition:color .2s ease-out, background 1s ease-in;
-  -ms-transition:color .2s ease-out, background 1s ease-in;
-  -moz-transition:color .2s ease-out, background 1s ease-in;
-  -webkit-transition:color .2s ease-out, background 1s ease-in;
-  transition:color .2s ease-out, background 1s ease-in;
+  transition:color .2s ease-out, background .2s ease-in; 
+  font-size: 20px;
 }
 #contact-list li:hover .fa-twitter,
 article .share .twitter:hover {
@@ -90,6 +87,11 @@ article .share .twitter:hover {
 }
 #contact-list li:hover .fa-linkedin {
 	color: #1D87BD;
+}
+#contact-list li:hover .fa-reddit,
+article .share .reddit:hover {
+	color: #e74c3c;
+	border-color: #e74c3c;
 }
 #contact-list li:hover .fa-envelope {
 	color: #E93E30;
@@ -195,7 +197,7 @@ article.home h4,
 article.home h5,
 article.home h6 {
 	font-family: 'Ubuntu', sans-serif;
-	color: #f2756a;	/* orange*/
+	color: var(--article-title-links);
 }
 
 /* home article title links */
@@ -220,6 +222,7 @@ article.home{
 .author .author-image {
   float: left;
   margin-right: 20px;
+  max-width: 80px
 }
 
 footer {

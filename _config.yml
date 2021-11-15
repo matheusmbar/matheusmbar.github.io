@@ -10,7 +10,7 @@ disqus: matheusmbar-github-io
 google_analytics: UA-134810563-1
 google_tagmanager: "GTM-5G8JWVF"
 title: Matheus Marques
-
+logo: assets/media/MM_logo.png
 
 defaults:
   -
@@ -18,6 +18,7 @@ defaults:
       path: "" # empty string for all files
     values:
       title: matheusmbar
+      social-share: true # add social media sharing buttons to all blog posts
 
 description: A journey about developing embedded systems
 author:
@@ -27,6 +28,7 @@ author:
 #  twitter: 
 #  pinterest: 
   linkedin: matheusmbar
+  profile_pic: "assets/profiles/matheus.jpg"
 #  bio: 
   email_md5: 8db7b9f2f6186cfad394d87fe6868a83
   bio: I'm an Electronic Engineer always trying to learn more about developing embedded systems and help other people to do so
@@ -36,6 +38,13 @@ rss_path: feed.xml
 categories_path: categories.html
 tags_path: tags.html
 enable_analytics: true
+
+# Select which social network share links to show in posts
+share-links-active:
+  twitter: true
+  facebook: false
+  linkedin: true
+  reddit: true
 
 # set it as url of an image
 # sidebar_background_image: https://www.dropbox.com/s/g9h23zrycedxtk5/sky.png?raw=1
