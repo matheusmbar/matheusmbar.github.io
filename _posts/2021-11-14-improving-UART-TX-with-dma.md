@@ -65,7 +65,7 @@ Take a look at function `HAL_UART_IRQHandler` to understand where it is happenin
 ```c
 static void UART_TxISR_8BIT(UART_HandleTypeDef *huart){
   /* Check that a Tx process is ongoing */
-  if (huart->gState == HAL_UART_STATE_BUSY_TX)  {
+  if (huart->gState == HAL_UART_STATE_BUSY_TX){
     if (huart->TxXferCount == 0U){
       /* Disable the UART Transmit Data Register Empty Interrupt */
       CLEAR_BIT(huart->Instance->CR1, USART_CR1_TXEIE);
