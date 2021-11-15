@@ -12,6 +12,7 @@ google_tagmanager: "GTM-5G8JWVF"
 title: Matheus Marques
 logo: assets/media/MM_logo_300x218.png
 logo-square: assets/media/MM_logo_300x300.png
+logo-share: assets/media/MM_logo_700x700.png
 
 defaults:
   -
