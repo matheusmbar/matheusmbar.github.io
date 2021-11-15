@@ -11,11 +11,11 @@ There will always be peripherals to use and drivers to implement in embedded pro
 
 With that out of the way, this post will be the first of a few ones that won't include test code, they are actually the working result and documentation of a learning through development and testing process I took recently. These efforts tend to get closer to [Extreme Go Horse](https://medium.com/@dekaah/22-axioms-of-the-extreme-go-horse-methodology-xgh-9fa739ab55b4) programming than to TDD actually 👀 but they are an important part of the journey. 
 
-<!--more-->
-
 ## UART
 
 I've been thinking about the development of a communication protocol and drivers for the bugfree-robot. Its hardware design provides three main communication ports: 2 full duplex UARTs and one USB port. None of them would work directly for wireless telemetry (USB for sure not) although  it is possible to connect simple and cheap Bluetooth-serial modules like the HC-05, HC-06, HM-10 or similar. They don't allow a high throughput but it may be enough for transmitting information about its sensors and control parameters. 
+
+<!--more-->
 
 UART (Universal Asynchronous Receiver/Transmitter) is one of the most common communication methods in not so advanced embedded systems and is basically a full-duplex Asynchronous interface. There is no clock line so both devices must keep track of their own timing to transmit and receive each byte correctly. Many microcontrollers provide a more enhanced peripheral called USART (Universal Synchronous/Asynchronous Receiver/Transmitter) that is compatible with UART too. 
 
