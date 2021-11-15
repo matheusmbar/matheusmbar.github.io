@@ -29,8 +29,17 @@
 	<link href="{{ site.BASE_PATH }}/assets/resources/syntax/syntax.css" rel="stylesheet">
 	<link href="{{ site.BASE_PATH }}/assets/css/style.css" rel="stylesheet">
 	
-
 	<link rel="alternate" type="application/rss+xml" title="{{ site.name }}" href="{{ site.BASE_PATH }}/feed.xml">
+
+	<!-- Run jekyll-seo-tag -->
+	{% seo %}
+
+	<!-- Set preview image -->
+	{% if page.header-img %}
+    	<meta property="og:image" content="{{ site.url }}/{{ page.header-img }}" />
+	{% else %}
+		<meta property="og:image" content="{{ site.url }}/{{ site.logo }}" />
+	{% endif %}
 </head>
 
 <body>
