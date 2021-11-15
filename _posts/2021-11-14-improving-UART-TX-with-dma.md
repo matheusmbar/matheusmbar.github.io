@@ -11,7 +11,7 @@ There will always be peripherals to use and drivers to implement in embedded pro
 
 With that out of the way, this post will be the first of a few ones that won't include test code, they are actually the working result and documentation of a learning through development and testing process I took recently. These efforts tend to get closer to [Extreme Go Horse](https://medium.com/@dekaah/22-axioms-of-the-extreme-go-horse-methodology-xgh-9fa739ab55b4) programming than to TDD actually 👀 but they are an important part of the journey. 
 
-## UART
+# UART
 
 I've been thinking about the development of a communication protocol and drivers for the bugfree-robot. Its hardware design provides three main communication ports: 2 full duplex UARTs and one USB port. None of them would work directly for wireless telemetry (USB for sure not) although  it is possible to connect simple and cheap Bluetooth-serial modules like the HC-05, HC-06, HM-10 or similar. They don't allow a high throughput but it may be enough for transmitting information about its sensors and control parameters. 
 
@@ -22,11 +22,12 @@ UART (Universal Asynchronous Receiver/Transmitter) is one of the most common com
 This peripheral allows continuous bidirectional communication between two devices (i.e. full-duplex) but this does not work automatically. 
 An interface driver is usually implemented to interface ths peripheral with the application code. 
 
-### Transmitting data (TX)
+## Transmitting data (TX)
+
 
 Transmitting data continuously is almost as easy as one may think. As long as the application always has data to transmit, it is usually as simple as calling some sort of `UART_Transmit(char* data, uint8_t len)` as long as needed. The next transmission may start after it has finished transmitting this data array. The `HAL_UART` default library provided for the STM32 includes three functions for this task:
 
-1. **HAL_UART_Transmit**
+### 1. **HAL_UART_Transmit**
    
 ```c
 HAL_StatusTypeDef HAL_UART_Transmit(
@@ -40,7 +41,7 @@ This function will check the input parameters and peripheral state. It will retu
 
 
 
-1. **HAL_UART_Transmit_IT**
+### 2. **HAL_UART_Transmit_IT**
 
 ```c
 HAL_StatusTypeDef HAL_UART_Transmit_IT(
@@ -59,10 +60,29 @@ There is a performance hit that it not clearly seen at first sight. The UART per
 
 This will take some of the processing cycles away from the application, besides interrupting its execution as many times as bytes in the data array.
 
-Take a look at function `HAL_UART_IRQHandler` to understand where it is happening. It runs after each byte is transmitted in this mode, calling `huart->TxISR(huart)` to advance in the data array. This function pointer calls `UART_TxISR_8BIT` or `UART_TxISR_16BIT` based on the peripheral configuration. They are implemented at `stm32f3xx_hal_uart.c`.
+Take a look at function `HAL_UART_IRQHandler` to understand where it is happening. It runs after each byte is transmitted in this mode, calling `huart->TxISR(huart)` to advance in the data array. This function pointer calls `UART_TxISR_8BIT` or `UART_TxISR_16BIT` based on the peripheral configuration. They are implemented at `stm32f3xx_hal_uart.c`. Here is `UART_TxISR_8BIT` as an example:
 
+```c
+static void UART_TxISR_8BIT(UART_HandleTypeDef *huart){
+  /* Check that a Tx process is ongoing */
+  if (huart->gState == HAL_UART_STATE_BUSY_TX)  {
+    if (huart->TxXferCount == 0U){
+      /* Disable the UART Transmit Data Register Empty Interrupt */
+      CLEAR_BIT(huart->Instance->CR1, USART_CR1_TXEIE);
 
-3. **HAL_UART_Transmit_DMA**
+      /* Enable the UART Transmit Complete Interrupt */
+      SET_BIT(huart->Instance->CR1, USART_CR1_TCIE);
+    }
+    else{
+      huart->Instance->TDR = (uint8_t)(*huart->pTxBuffPtr & (uint8_t)0xFF);
+      huart->pTxBuffPtr++;
+      huart->TxXferCount--;
+    }
+  }
+}
+```
+
+### 3. **HAL_UART_Transmit_DMA**
 
 ```c
 HAL_StatusTypeDef HAL_UART_Transmit_DMA(
@@ -87,7 +107,7 @@ There are only two (optional) callbacks executed in this process:
 
 ## Closing points
 
-There is not much to implement regarding Transmission in a UART driver, at least nothing that I'd call as a requirement. The functions provided by default in the `HAL_UART` are capable of handling it well.
+There is not much to implement regarding Transmission in a UART driver, at least nothing that I'd call as a requirement. For some applications a way to protect the resource with a Mutex or Semaphore may be useful. The functions provided by default in the `HAL_UART` are capable of handling it well for most of the simpler cases.
 
 Combining it with DMA may save processing power as explained above, it is basically putting peripherals to work in a parallel pipeline that the processor does not need to worry about while the transmission has not finished. Knowing how to do it may help on optimizations and applications that demand more from the processor.
 
