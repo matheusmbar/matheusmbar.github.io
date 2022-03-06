@@ -204,9 +204,6 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle){
 }
 ```
 
-
-.....
-
 ### Circular buffer and `lineIdle` handler function
 
 At this point most of the magic tricks in this implementation are revealed:
