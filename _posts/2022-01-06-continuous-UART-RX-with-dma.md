@@ -7,7 +7,7 @@ comments: true
 footnote: "Infinite reception circular loop"
 ---
 
-This article will continue the analysis and implementation of a UART driver that was started in the [last post]({{ site.baseurl }}{% post_url 2021-11-14-improving-UART-TX-with-dma %}), but now focusing in data receptions instead of transmission. As explained before, there will be not use of TDD at this moment since the main focus are using the UART functions provided by the STM32 hardware abstraction layer libraries, comparison between the methods provided and how to better use them in a firmware project.
+This article will continue the analysis and implementation of a UART driver that was started in the [last post]({{ site.baseurl }}{% post_url 2021-11-14-improving-UART-TX-with-dma %}), but now focusing in data reception instead of transmission. As explained before, there will be no use of TDD at this moment since the main focus are using the UART functions provided by the STM32 hardware abstraction layer libraries, comparison between the methods provided and how to better use them in a firmware project.
 
 <!--more-->
 
@@ -168,16 +168,123 @@ Remember that there is usually one of this for each UART peripheral, so add the 
 
 ### Continuous reception
 
-The three methods provided by STM described above stop receiving data and need a restart every time.
+The three methods provided by STM described above stop receiving data and need a restart every time. That results in a chance of data loss and additional operations to keep reception running.
 
-peripheral setup: DMA CIRCULAR
+The DMA method is the only one that allows operating in a continuous reception mode so it won't stop receiving data and no restart will be required. In order to do that, the DMA Channel selected to operate with the UART RX must be in a special mode called `DMA_CIRCULAR` (the default is `DMA_NORMAL`). This option will instruct the DMA peripheral to not stop the reception in the end of the reception buffer but return to its beginning, overriding old data with new bytes.
+
+This is part of the UART initialization code present in `usart.c`, generated automatically by STM32Cube tool:
+
+```c
+void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle){
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
+  if(uartHandle->Instance==UART4){
+    //
+    // ......
+    //
+
+    /* UART4 DMA Init */
+    /* UART4_RX Init */
+    hdma_uart4_rx.Instance = DMA2_Channel3;
+    hdma_uart4_rx.Init.Direction = DMA_PERIPH_TO_MEMORY;
+    hdma_uart4_rx.Init.PeriphInc = DMA_PINC_DISABLE;
+    hdma_uart4_rx.Init.MemInc = DMA_MINC_ENABLE;
+    hdma_uart4_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
+    hdma_uart4_rx.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
+    hdma_uart4_rx.Init.Mode = DMA_CIRCULAR;
+    hdma_uart4_rx.Init.Priority = DMA_PRIORITY_LOW;
+    if (HAL_DMA_Init(&hdma_uart4_rx) != HAL_OK){
+      Error_Handler();
+    }
+
+    __HAL_LINKDMA(uartHandle,hdmarx,hdma_uart4_rx);
+    //
+    // ......
+    //
+  }
+}
+```
 
 
 .....
 
-### :warning: idleLine handler function
+### Circular buffer and `lineIdle` handler function
+
+At this point most of the magic tricks in this implementation are revealed:
+- UART idle line detection
+- DMA operating in circular buffer mode
+
+The circular buffer is an useful technique to use on data reception. It allows a continuous cycle of reception and data processing running in parallel. We may say that the buffer will contain two types of data:
+- new received data (unprocessed)
+- processed data (free space)
+
+The implementation must take care of separating these two kinds of data, to new data may be stored in the free space and the processing function must know how much data is available and where it is.
+
+I won't get too much in detail about circular buffers here since there is a lot of good material about it online. A simple summary of the implementation is:
+
+1. Define the size of the reception buffer
+   - it must at least be bigger than the bigger continuous data frame you expect to receive
+   - a bigger buffer that fits multiple data frames may reduces the hurry in processing data as soon as it arrives to avoid filling the buffer and overriding data
+
+2. Keep track of two values (or pointers) to control the use of the circular buffer: `head` and `tail`
+3. Store a received byte in the position indicated by `head` then increment `head` value
+4. Read a byte in the position indicated bu `tail` then increment `tail` value
+5. Point `head` or `tail` to the beginning of buffer when each one of them get there
+6. Take care of edge cases when valid data is split between the end of the start of buffer (`tail > head`)
+7. Update control values on `lineIdle` callback
+8. Use `head`, `tail` and buffer size to calculate amount of data available
+9. Avoid at all costs not processing the received data fast enough, the status variables will get to an unstable state and and data will get overridden
+
+In the IRQ implementation for UART4 shown above, I'm passing the value `huart4.hdmarx->Instance->CNDTR` as a parameter for the `lineIdle` callback. This value is required to identify the head position since the DMA is continuously copying received bytes to the circular and this callback is the better place to take a look at this information.
+
+These are a few examples of head and tail behavior on circular buffer reception:
+
+```sh
+# Empty buffer
+ 0 1 2 3 4 5 6 7 8 9
+| | | | | | | | | | |
+ ├─head
+ └─tail
+
+# 5 bytes on buffer
+ 0 1 2 3 4 5 6 7 8 9
+|x|x|x|x|x| | | | | |
+ │         └─head
+ └─tail
+
+# 5 bytes on wrapped buffer
+ 0 1 2 3 4 5 6 7 8 9
+|x|x| | | | | |x|x|x|
+     └─head    │
+               └─tail
+
+# Full buffer
+ 0 1 2 3 4 5 6 7 8 9
+|x|x|x|x|x|x| |x|x|x|
+             │ └─tail
+             └─head
+```
+
+Here I'm considering that a full buffer actually contains one byte less than its size. That is a implementation choice that may not matter much but it must be take in consideration to avoid confusion with an empty buffer.
 
 
+## Optional callbacks
 
-## Closing points
+There are some callbacks provided by the HAL UART implementation that may be useful in special cases. Their names are descriptive so take a better look if they seem to cover something you need.
 
+```c
+void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart)
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
+```
+
+Implementing a reset of the reception system in the error callback is probably a good idea, since it is called when something wrong happened and the RX has probably been stopped.
+
+
+## Applying TDD in this implementation
+
+Applying TDD to HAL libraries is not usually very friendly since they are closely attached to microcontroller peripherals and memory addresses that may not be useful while running tests in the development system. Complementary libraries like the one the I've started to implement here for a UART Driver are the opposite to that, after running some tests and defining the desired functions and their responsibilities, it is recommended to implement them following the TDD procedure.
+
+Create test cases for data reception, data consumption, querying available data, forcing a full buffer and checking what happens, same thing for an empty buffer. There is space for a discussion about what relation between `tail` and `head` values defines a full buffer, since both pointing to the same position may create confusion in relation to an empty buffer. Tis aspect should for sure be covered by tests.
+
+
+The implementations presented in this article are available in the `bugfree_robot` repository, at [this commit](https://github.com/matheusmbar/bugfree_robot/tree/18a2df52659d4ecf00bf2c497517bf941ffb8a81). I recommend caution on using the code directly since it was not completely tested in the hardware to make sure that all calculations regarding the circular buffer are correct.
