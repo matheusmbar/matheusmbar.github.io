@@ -176,7 +176,7 @@ Start address 0x08000000, load size 111
 Transfer rate: 505 bytes/sec, 111 bytes/write.
 
 # enable tui mode
-(gdb) enable tui
+(gdb) tui enable
 ```
 
 Using GDB directly will probably seem too complicated for those that have never done it. This is a skill that may be useful some day since some projects and environments make it hard to integrate graphical tools.
