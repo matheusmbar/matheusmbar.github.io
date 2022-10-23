@@ -4,7 +4,7 @@ title: embedded firmware from scratch - part 1
 categories: [tools]
 tags: [embedded, programming, toolchain]
 comments: true
-footnote: ""
+footnote: "Ever though about not openning the IDE to develop firmware?"
 ---
 
 Starting a new firmware development project requires multiple decisions, even after the microcontroller and hardware are already selected. One of the first steps is defining the development environment, that in my conception includes:
@@ -130,7 +130,7 @@ A consistent pipeline should present itself as the Single Source of Truth in the
 
 Projects that depend on a IDE to compile are close to impossible to integrate in a full automated build pipeline. Almost all points highlighted in this article play some part here.
 
-An IDE that is exclusive (or works better) in a specific OS will require the same one to be used in the automation pipeline. 
+An IDE that is exclusive (or works better) in a specific OS will require the same one to be used in the automation pipeline.
 
 User intervention is required to trigger builds. Try to ask the IT responsible to create a pipeline with a point and click tool included.
 
