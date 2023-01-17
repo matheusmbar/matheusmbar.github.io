@@ -1,3 +1,3 @@
 #!/bin/bash
 
-bundle exec jekyll serve --draft --config=_config.yml,_local_config.yml --incremental
+bundle exec jekyll serve --draft --config=_config.yml,_local_config.yml

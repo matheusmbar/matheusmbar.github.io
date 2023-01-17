@@ -1,7 +1,7 @@
 dbyll
 =====
 
-Open source stylish, minimalistic theme for jekyll.  
+Open source stylish, minimalistic theme for jekyll.
 Demo: http://dbtek.github.io/dbyll/
 
 ## New
@@ -15,7 +15,7 @@ Demo: http://dbtek.github.io/dbyll/
 - Bootstrap based.
 - Glyphicon and Font-Awesome Icons.
 - Pagination.
-- Syntax highlighting with pygments.
+- Syntax highlighting with rouge ([supported languages](https://github.com/rouge-ruby/rouge/wiki/List-of-supported-languages-and-lexers)).
 - Disqus comments.
 - :new: Custom sidebar background image.
 
@@ -35,4 +35,3 @@ Demo: http://dbtek.github.io/dbyll/
 
 ### License
 - [MIT](http://opensource.org/licenses/MIT)
-

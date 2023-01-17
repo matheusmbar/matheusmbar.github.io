@@ -24,7 +24,7 @@ This is the **first article** about this endeavor, focusing on a few obstacles t
 
 Using the **New Project Wizard** in a IDE takes of a lot of the burden of creating a new project and setting up everything until it works together correctly. It is in my opinion the best choice in many cases, maybe the only one for beginners and intermediate level developers.
 
-Programming for embedded systems usually means crafting **everything** that the microntroller requires to run, and that means **a lot**. Nothing comes for free and mistakes in small details may result in nothing working (the famous hard fault).
+Programming for embedded systems usually means crafting **everything** that the microcontroller requires to run, and that means **a lot**. Nothing comes for free and mistakes in small details may result in nothing working (the famous hard fault).
 
 Taking the IDE path means accepting multiple non-negotiable choices that it has made. As the project advances, the IDE gets updated (or not) and other factors pile up, these limitations may start to bother and become obstacles.
 
@@ -142,4 +142,4 @@ The idea for this article wasn't a full rant against IDEs (although it may have 
 
 Setting up the project from scratch has forced me to learn a lot more about what makes some code run in the microcontroller. It brings many challenges while removing resources like vendor provided peripheral libraries, linker file and startup code, that must be replaced to obtain a fully functional firmware.
 
-In the next article I'll show and explain the required steps. There will be a lot of code and low level details.
+In the next article (*already available [here]()*) I'll show and explain the required steps. There will be a lot of code and low level details.
