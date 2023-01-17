@@ -5,7 +5,7 @@ group :jekyll_plugins do
   gem "jekyll-paginate"
   gem 'jekyll-target-blank'
   gem 'jemoji'
-  gem "pygments.rb"
+  gem 'rouge'
   gem 'jekyll-seo-tag'
 end
 

@@ -13,6 +13,7 @@
 .highlight .cpf { color: #75715e } /* Comment.PreprocFile */
 .highlight .c1 { color: #75715e } /* Comment.Single */
 .highlight .cs { color: #75715e } /* Comment.Special */
+.highlight .gp { color: #f92672 } /* Terminal '$' */
 .highlight .gd { color: #f92672 } /* Generic.Deleted */
 .highlight .ge { font-style: italic } /* Generic.Emph */
 .highlight .gi { color: #a6e22e } /* Generic.Inserted */
