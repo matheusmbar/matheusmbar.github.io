@@ -1,0 +1,12 @@
+---
+layout: null
+sitemap: false
+---
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: *
+Disallow: /assets/profiles/
+
+Sitemap: {{ 'sitemap.xml' | absolute_url }}
