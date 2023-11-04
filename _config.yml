@@ -56,8 +56,15 @@ BASE_PATH:
 url: "https://matheusmbar.com" # the base hostname & protocol for your site
 
 plugins:
-  - jekyll-paginate
-  - jemoji
-  - jekyll-target-blank
   - jekyll-sitemap
+  - jekyll-paginate
+  - jekyll-target-blank
+  - jemoji
+  - rouge
   - jekyll-seo-tag
+
+exclude:
+  - Gemfile
+  - README.md
+  - serve_draft.sh
+  - serve_production.sh

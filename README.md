@@ -25,7 +25,20 @@ Demo: http://dbtek.github.io/dbyll/
 
 ### Install
 - You need to have [ruby](https://www.ruby-lang.org/en/documentation/installation/) installed in your system.
-  * ```sudo apt install ruby ruby-dev```
+
+```bash
+sudo apt install ruby ruby-dev
+```
+
+- set `gem` installation folder to remove need of `sudo` on commands
+
+```bash
+cat <<EOT >> ~/.zshrc
+# Set gem installation folder to remove need of sudo
+export GEM_HOME=\"$HOME/.config/gem\"
+EOT
+```
+
 - Install bundler which helps in specifying and installing dependencies of any Ruby project. ```gem install bundler```
 - Go to the root of the repo and run this - ```bundle install```
 - Then - ```bundle exec jekyll serve```
