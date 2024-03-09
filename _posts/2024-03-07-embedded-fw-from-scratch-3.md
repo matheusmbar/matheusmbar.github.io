@@ -9,15 +9,17 @@ footnote: "There is life before main()"
 
 Which code does execute first when a microcontroller starts to run? Many would say:
 
-> Firmware execution starts at the `main()` function"
+> Firmware execution starts at the `main()` function
 
 Eventhough that is a reasanoble and expected answer, a lot should have already happened when the execution gets there.
 
+Let's take a look at a few crucial steps for embedded development that are usually ignored when coding for complete operating systems like Linux, where the toolchain will probably take care of everything correctly. I'm talking about **startup code** and the **linker script**. They will provide the very first instructions that execute when the processor starts and tell the linker where to put the binary bits that the compiler it is creating, every function and most of the variables will get an address in memory base on this.
+
 This is the third article in a series about creating a firmware project from scratch. The other ones are available at [PART 1]({{ site.baseurl }}{% post_url 2022-10-23-embedded-fw-from-scratch-1 %}) and [PART 2]({{ site.baseurl }}{% post_url 2023-01-16-embedded-fw-from-scratch-2 %}).
 
-This time I'll be showing the linker file, startup code and the correct answer for the openning question.
-
 <!--more-->
+
+Knowledge about program memory segments will be a requirement for this one. Take a moment to read about `text`, `data` and `bss` in [this article](https://mcuoneclipse.com/2013/04/14/text-data-and-bss-code-and-data-size-explained/) and [Wikipedia](https://en.wikipedia.org/wiki/Data_segment) if not so confident about their definitions.
 
 # Structuring the scratch
 
@@ -53,7 +55,7 @@ embedded_cpp
 
 For a long time I've considered the linker script file part of the solution provided by the vendor's IDE, with not much need for a closer look at. Oppening it is actualy a bit scary, it seems like a combination of magic words grouped in some blocks.
 
-It got impossible to ignore for this "firmware from scratch" project. The linker script may be seen as a basic sketch of the required firmware parts, evenmore for its startup process. I'll use it as a guide while going along the startup process, that will cover most of its content.
+It got impossible to ignore for this "firmware from scratch" project. The linker script may be understood as a basic sketch of the required firmware parts, evenmore for the startup process. I'll use it as a guide while going along the startup process, that will cover most of its content.
 
 Its content and structure are tightly coupled to the microcontroller architecture and part number. It passes commands to the linker in the final steps of generating a binary file, with these main responsabilities:
 - list which data will be part of the binary
@@ -64,7 +66,7 @@ Its content and structure are tightly coupled to the microcontroller architectur
 
 Mentions of "data" here include: initial values for variables, function pointers, custom code, library code, any result from the compilation process that may be required by the firmware. It is even possible to include data that is not even required anywhere, so optimizing binary size should include checking the linker script file.
 
-I've used the linker script provided by STM32CubeIDE for its target microcontroller, starting from something that already works, studying its content and applying some minor changes. Take some time to look at the linker script in any of your own projects, their structure is usualy similar. Keep in mind that your mileage may vary, since some of them are cumbersome and hard to read due lack of line breaks and comments.
+I'll not pretend to understand everything that it is doing, there are a lot of sections, variables and special keywords. This is the reason that this one has not been developed from scratch, but imported from a project created with STM32CubeIDE for this target, with only a few small adjusts. not all sections will be described here, only the main ones and what gets referenced in the startup code. Open the [STM32F103C8Tx.ld](https://github.com/matheusmbar/embedded_cpp/blob/0.1.0/blue_pill_01/STM32F103C8TX.ld) file to follow along.
 
 Many variable and section names are customizable and coupled to compiler toolchain, implementation in the startup and other low level firmware code, as will be shown in the next topics. While writing this, I've realized that some data sections described in the Linker Script are not in use by the startup code or not of much relevance at this moment and won't be covered.
 
@@ -74,9 +76,7 @@ Take a look at [LD Command Language](https://ftp.gnu.org/old-gnu/Manuals/ld-2.9.
 
 The first line in my linker script is the ENTRY command, that indicates the entrypoint for the execution. This is the answer to "what gets executed first", a function defined with this name. This function will be detailed in next sections along the linker script.
 
-The MEMORY command describes the memory layout, split in RAM and FLASH. It indicates their supported operations (read, write, execute), origin addresses and length. These names will be referenced later and are actualy arbitrary, carrying no meaning by themselves.
-
-The last three lines define variables that may be referenced in the linker script itself or by the C code in runtime.
+The MEMORY command describes the memory layout, split in RAM and FLASH. This script snippet indicates that FLASH section starts at address 0x8000000 and extends for 64 KB, this section allows only read and execution (`rx`). RAM starts at address 0x20000000 and extends for 20KB, it is allowed to read, write and execute (`xrw`) on this section. Executing from RAM is not required (or too common), but it may be useful for some tasks. Some projects may want to split the memory in more sections, like dedicating a region for bootloader instructions, support for this is platform dependent.
 
 ```rs
 ENTRY(Reset_Handler)
@@ -86,7 +86,13 @@ MEMORY
   RAM   (xrw) : ORIGIN = 0x20000000, LENGTH = 20K
   FLASH  (rx) : ORIGIN = 0x8000000,  LENGTH = 64K
 }
+```
 
+The linker does not care about the name of the sections, a RAM section does not suggest it should allocate mutable variables there (even though it seems obvious for developers). Only the parameters that you provide about the sections matter.
+
+The next three lines define variables that may be referenced in the linker script itself or by the C code in runtime.
+
+```rs
 _estack = ORIGIN(RAM) + LENGTH(RAM); /* end of "RAM" Ram type memory */
 _Min_Heap_Size = 0x200;              /* required amount of heap */
 _Min_Stack_Size = 0x400;             /* required amount of stack */
@@ -120,7 +126,7 @@ SECTIONS {
 }
 ```
 
-It starts at a 4 bytes alignment, keeps all data declared for section `.isr_vector`, ends with a 4 bytes alignment and will be stored in FLASH memory. 
+It starts at a 4 bytes alignment, keeps all data declared for section `.isr_vector`, ends with a 4 bytes alignment and will be stored in FLASH memory.
 
 For this project, a primitive ISR vector is the only content of this section, defined at `startup.c` with a special attribute:
 
@@ -196,7 +202,7 @@ SECTIONS {
 }
 ```
 
-This is the first chance to take a look at the `Reset_Handler()`. A few symbols defined in the linker script are declared as `extern`, providing access for these values on runtime. 
+This is the first chance to take a look at the `Reset_Handler()`. A few symbols defined in the linker script are declared as `extern`, providing access for these values on runtime.
 
 This code is responsible for copying data from FLASH to RAM. The data source starts at `_sidata` (pointer to text section) and the data destination starts at `_sdata` (pointer to data section), iterating up to `_edata` address.
 
@@ -364,11 +370,12 @@ Idx Name          Size      VMA       LMA       File off  Algn
 
 # Closing points
 
-These are the most important informations about the linker script and startup code, allowing a basic understanding about what is going on there. It is well know and repeated that "the devil is in the details" and there are so many of them in these commands and variables. Making a mistake while positioning some section, defining symbols and using them in the startup code may result in unbootable firmware that is hard to debug and understand. 
+These are the most important informations about the linker script and startup code, allowing a basic understanding about what is going on there. It is well know and repeated that "the devil is in the details" and there are so many of them in these commands and variables. Making a mistake while positioning some section, defining symbols and using them in the startup code may result in unbootable firmware that is hard to debug and understand.
 
 I would not recommend writing the linker script and startup codes from scratch, there are other ways to obtain them from vendor or other automated tools.
 
 The next version of this project will take a different approach to obtain these, less "from scratch" than here.
 
-By the way, there is a great article from "Interrupt by Memfault" available [here](https://interrupt.memfault.com/blog/how-to-write-linker-scripts-for-firmware) that helped me a lot while studying this subject.
+Take some time to look at the linker script in any of your own projects, their structure is usualy similar. Keep in mind that your mileage may vary, since some of them are cumbersome and hard to read due lack of line breaks and comments.
 
+By the way, there is a great article from "Interrupt by Memfault" available [here](https://interrupt.memfault.com/blog/how-to-write-linker-scripts-for-firmware) that helped me a lot while studying this subject.
