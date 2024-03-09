@@ -4,7 +4,7 @@ title: embedded firmware from scratch - part 2
 categories: [tools]
 tags: [embedded, programming, C++, toolchain, make]
 comments: true
-footnote: ""
+footnote: "Making a Makefile"
 ---
 
 This is the second article of an endeavor to develop an embedded software project for ARM microcontrollers that works standalone. It won't require any vendor specific tools in its development cycle. Take a look at [PART 1]({{ site.baseurl }}{% post_url 2022-10-23-embedded-fw-from-scratch-1 %}) to understand the beginning of this and the main pain points that I see when depending on IDE projects for firmware development.
