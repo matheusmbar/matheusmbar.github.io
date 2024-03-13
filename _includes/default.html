@@ -12,26 +12,68 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	{% if site.enable_analytics %}
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-NF612LDE8Q"></script>
 	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		gtag('js', new Date());
-		gtag('config', 'G-NF612LDE8Q');
+	// Define dataLayer and the gtag function.
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+
+	// Set default consent to 'denied' as a placeholder
+	// Determine actual values based on your own requirements
+	gtag('consent', 'default', {
+		'ad_storage': 'denied',
+		'ad_user_data': 'denied',
+		'ad_personalization': 'denied',
+		'analytics_storage': 'denied'
+	});
 	</script>
+
+	<!-- Google tag (gtag.js) -->
+	<script
+	type="text/plain"
+	data-category="analytics"
+	async
+	src="https://www.googletagmanager.com/gtag/js?id={{ site. google_tagmanager }}">
+	</script>
+
+	<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+
+	gtag('js', new Date());
+	gtag('config', '{{ site. google_tagmanager }}');
+	</script>
+
 	{% else %}
-	<!-- Google Tag Manager (script) is disabled -->
+	<script
+		type="text/plain"
+		data-category="!analytics">
+		console.log("Analytics is disabled by config")
+	</script>
 	{% endif %}
+
+	<script
+		type="text/plain"
+		data-category="analytics">
+		console.log("Analytics is enabled")
+	</script>
+
+	<script
+		type="text/plain"
+		data-category="!analytics">
+		console.log("Analytics is disabled")
+	</script>
+
 
 	<!-- Le styles -->
 	<link href="{{ site.BASE_PATH }}/assets/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 	<link href="{{ site.BASE_PATH }}/assets/resources/syntax/syntax.css" rel="stylesheet">
 	<link href="{{ site.BASE_PATH }}/assets/css/style.css" rel="stylesheet">
 
 	<link rel="alternate" type="application/rss+xml" title="{{ site.name }}" href="{{ site.BASE_PATH }}/feed.xml">
+
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.0.0/dist/cookieconsent.css">
 
 	<!-- Run jekyll-seo-tag -->
 	{% seo %}
@@ -45,14 +87,7 @@
 </head>
 
 <body>
-	{% if site.enable_analytics %}
-	<!-- Google Tag Manager (noscript) -->
-	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5G8JWVF"
-	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-	<!-- End Google Tag Manager (noscript) -->
-	{% else %}
-	<!-- Google Tag Manager (noscript) is disabled -->
-	{% endif %}
+	<script type="module" src="{{ site.BASE_PATH }}/assets/js/cookieconsent-config.js"></script>
 
 	<nav class="navbar navbar-default visible-xs" role="navigation">
 		<!-- Brand and toggle get grouped for better mobile display -->
