@@ -10,8 +10,15 @@ function consentAnalytics(granted) {
   console.log('consentAnalytics: ' + status)
 
   gtag('consent', 'update', {
-    'analytics_storage': status
+    'analytics_storage': status,
+    'ad_storage': status
   });
+}
+
+const cookie = CookieConsent.getCookie();
+
+if(cookie.hasOwnProperty('categories') && cookie.categories.includes('analytics')){
+  consentAnalytics(true)
 }
 
 CookieConsent.run({

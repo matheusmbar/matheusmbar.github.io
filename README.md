@@ -48,3 +48,9 @@ EOT
 
 ### License
 - [MIT](http://opensource.org/licenses/MIT)
+
+## matheusmbar
+
+### CookieConsent
+
+[API reference](https://cookieconsent.orestbida.com/reference/api-reference.html#getuserpreferences)
